@@ -17,7 +17,7 @@ class _TutorLoginScreenState extends State<TutorLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Container(
