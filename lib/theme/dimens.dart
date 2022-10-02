@@ -68,7 +68,7 @@ class Dimens {
   //TEXT
   static const Welcome = "WELCOME";
   static const SignInContinue = "Sign in to Continue";
-  static const SignUpContinue = "Sign up to Continue";
+  static const SignUpContinue = "Sign up to Join";
   static const Email = "Email";
   static const Password = "Password";
   static const Name = "Name";
@@ -88,4 +88,6 @@ class Dimens {
   static const welcomeStudent = "Welcome Student";
   static const welcomeTutor = "Welcome Tutor";
   static const letTutor = '"Please login with the provided account"';
+  static const address = "Address";
+  static const rePass = "RepeatPassword";
 }

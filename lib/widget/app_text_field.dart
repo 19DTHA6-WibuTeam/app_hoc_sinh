@@ -2,16 +2,21 @@ import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
-  const AppTextField(
-      {Key? key, required this.labelText, required this.obscureText})
+  AppTextField(
+      {Key? key,
+      required this.labelText,
+      required this.obscureText,
+      required this.controllerName})
       : super(key: key);
 
   final String labelText;
   final bool obscureText;
+  TextEditingController controllerName;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controllerName,
       obscureText: obscureText,
       style: AppTextStyle.style(
         color: Colors.black.withOpacity(0.8),

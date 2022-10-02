@@ -1,4 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/sign_in/sign_in_first_screen.dart';
+import 'package:doan_chuyen_nganh/UI/sign_in_first_screen.dart';
 import 'package:flutter/material.dart';
 
 class ManagerRoutes {

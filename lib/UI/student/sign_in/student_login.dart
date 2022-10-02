@@ -1,19 +1,32 @@
+import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/UI/student/sign_up/sign_up_screen.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
+import 'package:doan_chuyen_nganh/widget/app_text_filed_pass.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TutorLoginScreen extends StatefulWidget {
-  const TutorLoginScreen({Key? key}) : super(key: key);
+import '../../sign_in_first_screen.dart';
+
+class StudentLoginScreen extends StatefulWidget {
+  const StudentLoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<TutorLoginScreen> createState() => _TutorLoginScreenState();
+  State<StudentLoginScreen> createState() => _StudentLoginScreenState();
 }
 
-class _TutorLoginScreenState extends State<TutorLoginScreen> {
+class _StudentLoginScreenState extends State<StudentLoginScreen> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +56,17 @@ class _TutorLoginScreenState extends State<TutorLoginScreen> {
                           icon:
                               const Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () {
-                            Get.back();
+                            Get.offAll(const SignInFirstScreen());
                           },
                         )),
                     Padding(
-                      padding: const EdgeInsets.all(Dimens.PADDING_20),
+                      padding: const EdgeInsets.only(
+                          left: Dimens.PADDING_10, bottom: Dimens.PADDING_10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Dimens.welcomeTutor,
+                            Dimens.welcomeStudent,
                             style: AppTextStyle.style(
                                 fontSize: Dimens.TEXT_SIZE_22,
                                 fontWeight: FontWeight.w600),
@@ -80,22 +95,17 @@ class _TutorLoginScreenState extends State<TutorLoginScreen> {
                   ),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          Dimens.letTutor,
-                          style: AppTextStyle.style(
-                              fontSize: Dimens.TEXT_SIZE_12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.dark),
-                        ),
+                      AppTextField(
+                        labelText: Dimens.Phone,
+                        obscureText: false,
+                        controllerName: _phoneController,
                       ),
-                      const AppTextField(
-                          labelText: Dimens.Email, obscureText: false),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
-                      const AppTextField(
-                          labelText: Dimens.Password, obscureText: true),
+                      AppTextFieldPass(
+                        labelText: Dimens.Password,
+                        controllerName: _passwordController,
+                      ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.05),
                       SizedBox(
@@ -118,8 +128,31 @@ class _TutorLoginScreenState extends State<TutorLoginScreen> {
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
-                          onPressed: () => {},
+                          onPressed: () => {Get.offAll(const Student())},
                         ),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.04),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            Dimens.NotAccount,
+                            style: AppTextStyle.style(
+                                fontSize: Dimens.TEXT_SIZE_14,
+                                color: AppColors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          GestureDetector(
+                            onTap: () => {Get.to(const SignUpScreen())},
+                            child: Text(
+                              Dimens.SignUp,
+                              style: AppTextStyle.style(
+                                  color: AppColors.primary.withOpacity(0.8),
+                                  fontSize: Dimens.TEXT_SIZE_14),
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
@@ -156,8 +189,6 @@ class _TutorLoginScreenState extends State<TutorLoginScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
                       SizedBox(
                         height: Dimens.HEIGHT_55,
                         //padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),

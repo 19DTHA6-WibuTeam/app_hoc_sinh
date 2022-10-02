@@ -1,5 +1,5 @@
-import 'package:doan_chuyen_nganh/UI/sign_in/student_login.dart';
-import 'package:doan_chuyen_nganh/UI/sign_in/tutor_login.dart';
+import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
+import 'package:doan_chuyen_nganh/UI/tutor/sign_in/tutor_login.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
@@ -37,7 +37,8 @@ class _SignInFirstScreenState extends State<SignInFirstScreen> {
                       child: Image.asset(Images.imageSplash),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(Dimens.PADDING_20),
+                      padding: const EdgeInsets.only(
+                          left: Dimens.PADDING_10, bottom: Dimens.PADDING_10),
                       child: Text(
                         Dimens.Welcome,
                         style: AppTextStyle.style(
@@ -60,9 +61,6 @@ class _SignInFirstScreenState extends State<SignInFirstScreen> {
                   child: Expanded(
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: Dimens.HEIGHT_20,
-                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
