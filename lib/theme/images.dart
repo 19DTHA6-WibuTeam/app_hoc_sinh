@@ -27,4 +27,5 @@ class Images {
   static const String imageIntro3 = '$imagePath/image_intro_3.png';
   static const String imageIntro4 = '$imagePath/image_intro_4.png';
   static const String imageSplash = '$imagePath/splash.png';
+  static const String imageDefault = '$imagePath/cat.jpg';
 }
