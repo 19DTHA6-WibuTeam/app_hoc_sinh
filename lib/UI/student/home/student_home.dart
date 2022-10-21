@@ -1,9 +1,9 @@
 import 'package:doan_chuyen_nganh/UI/student/home/Components/tutor_card.dart';
+import 'package:doan_chuyen_nganh/UI/student/student_post/student_post.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
@@ -48,7 +48,7 @@ class _StudentHomeState extends State<StudentHome> {
                         Icons.search,
                         color: Color(0xFF8A8A8F),
                       ),
-                      hintText: 'Search',
+                      hintText: Dimens.search,
                       hintStyle: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -62,6 +62,11 @@ class _StudentHomeState extends State<StudentHome> {
             )
           ],
         )),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              Get.to(const StudentPost());
+            }),
       ),
     );
   }

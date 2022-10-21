@@ -3,6 +3,8 @@
 class Dimens {
   Dimens._();
 
+  static const String apiKey = "AIzaSyAuKUcUhl_6dbInI9z24DSXdWlX1_cvBns";
+
   // PADDING
 
   static const PADDING_5 = 5.0;
@@ -33,6 +35,7 @@ class Dimens {
   static const RADIUS_38 = 38.0;
 
   // HEIGHT
+  static const HEIGHT_10 = 10.0;
   static const HEIGHT_15 = 15.0;
   static const HEIGHT_20 = 20.0;
   static const HEIGHT_30 = 30.0;
@@ -43,6 +46,7 @@ class Dimens {
   static const HEIGHT_65 = 65.0;
   static const HEIGHT_95 = 95.0;
   static const HEIGHT_108 = 108.0;
+  static const HEIGHT_200 = 200.0;
 
   // WIDTH
   static const WIDTH_5 = 5.0;
@@ -51,7 +55,7 @@ class Dimens {
   static const WIDTH_25 = 25.0;
   static const WIDTH_40 = 40.0;
   static const WIDTH_80 = 80.0;
-
+  static const WIDTH_200 = 200.0;
   // ICON
   static const ICON_SIZE_24 = 24.0;
   static const ICON_SIZE_32 = 32.0;
@@ -67,27 +71,41 @@ class Dimens {
 
   //TEXT
   static const Welcome = "WELCOME";
-  static const SignInContinue = "Sign in to Continue";
-  static const SignUpContinue = "Sign up to Join";
+  static const SignInContinue = "Đăng nhập để tiếp tục";
+  static const SignUpContinue = "Đăng ký để tham gia";
   static const Email = "Email";
-  static const Password = "Password";
-  static const Name = "Name";
-  static const Phone = "Phone Number";
-  static const SignInWithGG = 'SIGN IN WITH GOOGLE';
-  static const SignIn = "SIGN IN";
-  static const SignUp = "SIGN UP";
-  static const Or = "Or";
-  static const NotAccount = "Don't have an Account? ";
-  static const YetAccount = "Have an Account? ";
+  static const Password = "Mật khẩu";
+  static const Name = "Họ tên";
+  static const Phone = "Điện thoại";
+  static const SignInWithGG = 'ĐĂNG NHẬP BẰNG GOOGLE';
+  static const SignIn = "ĐĂNG NHẬP";
+  static const SignUp = "ĐĂNG KÝ";
+  static const Or = "Hoặc";
+  static const NotAccount = "Chưa có tài khoản? ";
+  static const YetAccount = "Đã có tài khoản? ";
   static const Close = "Đóng";
   static const CreateDone = "Tạo tài khoản thành công!";
   static const Yes = "Xác nhận";
-  static const student = "Student/Student's parents";
-  static const tutor = "Central's tutor";
-  static const youAre = "You Are ... ?";
-  static const welcomeStudent = "Welcome Student";
-  static const welcomeTutor = "Welcome Tutor";
-  static const letTutor = '"Please login with the provided account"';
-  static const address = "Address";
-  static const rePass = "RepeatPassword";
+  static const student = "Học sinh/Phụ Huynh";
+  static const welcomeStudent = "Welcome";
+  static const address = "Địa chỉ";
+  static const rePass = "Xác nhận mật khẩu";
+  static const changePass = "Đổi mật khẩu";
+  static const signOut = "Đăng xuất";
+  static const birthday = "Ngày Sinh";
+  static const gender = "Giới tính";
+  static const oldPass = "Mật khẩu cũ";
+  static const newPass = "Mật khẩu mới";
+  static const change = "Đổi";
+  static const search = "Tìm kiếm";
+  static const chooseClass = "Chọn lớp";
+  static const classRoom = "Lớp:";
+  static const subject = "Môn học:";
+  static const chooseSubject = "Chọn môn học";
+  static const findTutor = "Đăng ký tìm gia sư";
+  static const pleasFillAll = "(*)Vui lòng điền đầy đủ các thông tin";
+  static const session = "Số buổi:";
+  static const chooseSession = "Số buổi/tuần";
+  static const chooseTime = "Chọn khung giờ muốn học";
+  static const note = "Yêu cầu/Ghi chú";
 }

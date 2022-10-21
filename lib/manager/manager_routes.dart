@@ -1,4 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/sign_in_first_screen.dart';
+import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
 import 'package:flutter/material.dart';
 
 class ManagerRoutes {
@@ -6,6 +6,6 @@ class ManagerRoutes {
   static String loginScreen = '/loginScreen';
   // MANAGERS
   static Map<String, Widget Function(BuildContext context)> manager = {
-    loginScreen: (context) => const SignInFirstScreen(),
+    loginScreen: (context) => const StudentLoginScreen(),
   };
 }

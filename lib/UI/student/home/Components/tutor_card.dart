@@ -18,7 +18,6 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
   Widget build(BuildContext context) {
     final double maxHeight = MediaQuery.of(context).size.height;
     final double maxWidth = MediaQuery.of(context).size.width;
-    int listIndex = widget.listIndex;
 
     return Container(
       decoration: const BoxDecoration(color: Colors.white),

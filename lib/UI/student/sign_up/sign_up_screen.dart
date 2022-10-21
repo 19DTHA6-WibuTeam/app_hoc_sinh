@@ -34,137 +34,136 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 end: Alignment.bottomRight,
                 colors: [AppColors.primaryLight, AppColors.primary]),
           ),
-          child: Expanded(
-            child: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      child: Image.asset(Images.imageSplash),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: Image.asset(Images.imageSplash),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: Dimens.PADDING_10, bottom: Dimens.PADDING_10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Dimens.welcomeStudent,
+                          style: AppTextStyle.style(
+                              fontSize: Dimens.TEXT_SIZE_22,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          Dimens.SignUpContinue,
+                          style: AppTextStyle.style(
+                              fontSize: Dimens.TEXT_SIZE_20,
+                              color: Colors.white.withOpacity(0.65),
+                              fontWeight: FontWeight.w300),
+                        )
+                      ],
                     ),
-                    // Positioned(
-                    //     top: MediaQuery.of(context).size.height * 0.05,
-                    //     child: IconButton(
-                    //       icon:
-                    //           const Icon(Icons.arrow_back, color: Colors.white),
-                    //       onPressed: () {
-                    //         Get.back();
-                    //       },
-                    //     )),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: Dimens.PADDING_10, bottom: Dimens.PADDING_10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Dimens.welcomeStudent,
-                            style: AppTextStyle.style(
-                                fontSize: Dimens.TEXT_SIZE_22,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            Dimens.SignUpContinue,
-                            style: AppTextStyle.style(
-                                fontSize: Dimens.TEXT_SIZE_20,
-                                color: Colors.white.withOpacity(0.65),
-                                fontWeight: FontWeight.w300),
-                          )
-                        ],
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.65,
+                padding: const EdgeInsets.only(
+                    top: Dimens.PADDING_20,
+                    left: Dimens.PADDING_20,
+                    right: Dimens.PADDING_20,
+                    bottom: Dimens.PADDING_20),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Dimens.RADIUS_15),
+                    topLeft: Radius.circular(Dimens.RADIUS_15),
+                  ),
+                ),
+                child: ListView(
+                  physics: const ScrollPhysics(),
+                  children: [
+                    AppTextField(
+                      labelText: Dimens.Name,
+                      enabled: true,
+                      obscureText: false,
+                      controllerName: _nameController,
+                    ),
+                    const SizedBox(height: Dimens.HEIGHT_10),
+                    AppTextField(
+                      labelText: Dimens.address,
+                      enabled: true,
+                      obscureText: false,
+                      controllerName: _addressController,
+                    ),
+                    const SizedBox(height: Dimens.HEIGHT_10),
+                    AppTextField(
+                      labelText: Dimens.Phone,
+                      enabled: true,
+                      obscureText: false,
+                      controllerName: _phoneController,
+                    ),
+                    const SizedBox(height: Dimens.HEIGHT_10),
+                    AppTextFieldPass(
+                      labelText: Dimens.Password,
+                      controllerName: _passController,
+                    ),
+                    const SizedBox(height: Dimens.HEIGHT_10),
+                    AppTextFieldPass(
+                      labelText: Dimens.rePass,
+                      controllerName: _rePassController,
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    SizedBox(
+                      height: Dimens.HEIGHT_55,
+                      //padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.RADIUS_10),
+                            )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(Dimens.SignUp,
+                                style: AppTextStyle.style(
+                                    fontSize: Dimens.TEXT_SIZE_20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        onPressed: () => {_signUpHandler()},
                       ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          Dimens.YetAccount,
+                          style: AppTextStyle.style(
+                              fontSize: Dimens.TEXT_SIZE_14,
+                              color: AppColors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        GestureDetector(
+                          onTap: () => {Get.back()},
+                          child: Text(
+                            Dimens.SignIn,
+                            style: AppTextStyle.style(
+                                color: AppColors.primary.withOpacity(0.8),
+                                fontSize: Dimens.TEXT_SIZE_14),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.65,
-                  padding: const EdgeInsets.all(Dimens.PADDING_20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(Dimens.RADIUS_38),
-                      topLeft: Radius.circular(Dimens.RADIUS_38),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      AppTextField(
-                        labelText: Dimens.Name,
-                        obscureText: false,
-                        controllerName: _nameController,
-                      ),
-                      AppTextField(
-                        labelText: Dimens.address,
-                        obscureText: false,
-                        controllerName: _addressController,
-                      ),
-                      AppTextField(
-                        labelText: Dimens.Phone,
-                        obscureText: false,
-                        controllerName: _phoneController,
-                      ),
-                      AppTextFieldPass(
-                        labelText: Dimens.Password,
-                        controllerName: _passController,
-                      ),
-                      AppTextFieldPass(
-                        labelText: Dimens.rePass,
-                        controllerName: _rePassController,
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05),
-                      SizedBox(
-                        height: Dimens.HEIGHT_55,
-                        //padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: AppColors.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(Dimens.RADIUS_10),
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(Dimens.SignUp,
-                                  style: AppTextStyle.style(
-                                      fontSize: Dimens.TEXT_SIZE_20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                          onPressed: () => {_signUpHandler()},
-                        ),
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.04),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            Dimens.YetAccount,
-                            style: AppTextStyle.style(
-                                fontSize: Dimens.TEXT_SIZE_14,
-                                color: AppColors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          GestureDetector(
-                            onTap: () => {Get.back()},
-                            child: Text(
-                              Dimens.SignIn,
-                              style: AppTextStyle.style(
-                                  color: AppColors.primary.withOpacity(0.8),
-                                  fontSize: Dimens.TEXT_SIZE_14),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
