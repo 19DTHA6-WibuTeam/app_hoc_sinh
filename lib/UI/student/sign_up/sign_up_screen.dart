@@ -4,9 +4,12 @@ import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_filed_pass.dart';
+import 'package:doan_chuyen_nganh/widget/custom_dropdown_button.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -21,8 +24,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _rePassController = TextEditingController();
+  List<String> genderList = ['Nam', 'Nữ', 'Khác'];
+
+  Rx<DateTime> pickedDate = DateTime.now().obs;
   @override
   Widget build(BuildContext context) {
+    final double maxHeight = MediaQuery.of(context).size.height;
+    final double maxWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
@@ -104,7 +112,84 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: false,
                       controllerName: _phoneController,
                     ),
-                    const SizedBox(height: Dimens.HEIGHT_10),
+                    SizedBox(height: maxHeight * 0.005),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: Dimens.PADDING_5,
+                        right: Dimens.PADDING_5,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            Dimens.birthday,
+                            style:
+                                AppTextStyle.titleSmall.copyWith(fontSize: 13),
+                          ),
+                          Text(
+                            Dimens.gender,
+                            style:
+                                AppTextStyle.titleSmall.copyWith(fontSize: 13),
+                          )
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: maxHeight * 0.08,
+                          width: maxWidth * 0.52,
+                          padding: EdgeInsets.only(
+                              top: maxHeight * 0.005,
+                              bottom: maxHeight * 0.005),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.lightgray,
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.RADIUS_10),
+                            ),
+                            child: Obx(
+                              () => OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        color: AppColors.transparent)),
+                                onPressed: () {
+                                  DatePicker.showDatePicker(context,
+                                      showTitleActions: true,
+                                      minTime: DateTime.now().subtract(
+                                          const Duration(days: 365000)),
+                                      maxTime: DateTime.now(),
+                                      onConfirm: (date) {
+                                    pickedDate.value = date;
+                                  },
+                                      currentTime: DateTime.now(),
+                                      locale: LocaleType.vi);
+                                },
+                                child: Center(
+                                  child: Text(
+                                    DateFormat('dd/MM/yyyy')
+                                        .format(pickedDate.value),
+                                    style: AppTextStyle.titleSmall
+                                        .copyWith(fontSize: 20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: maxHeight * 0.07,
+                          width: maxWidth * 0.365,
+                          child: CustomDropdownButton(
+                            itemsList: genderList,
+                            hintText: "Giới tính",
+                            enabled: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: maxHeight * 0.01),
                     AppTextFieldPass(
                       labelText: Dimens.Password,
                       controllerName: _passController,

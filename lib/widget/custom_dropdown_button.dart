@@ -8,8 +8,11 @@ class CustomDropdownButton extends StatefulWidget {
   String hintText;
   bool enabled;
 
-  CustomDropdownButton(
-      {required this.itemsList, required this.hintText, required this.enabled});
+  CustomDropdownButton({
+    required this.itemsList,
+    required this.hintText,
+    required this.enabled,
+  });
 
   @override
   State<CustomDropdownButton> createState() => _CustomDropdownButtonState();

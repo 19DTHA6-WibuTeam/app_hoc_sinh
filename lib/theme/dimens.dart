@@ -102,10 +102,16 @@ class Dimens {
   static const classRoom = "Lớp:";
   static const subject = "Môn học:";
   static const chooseSubject = "Chọn môn học";
-  static const findTutor = "Đăng ký tìm gia sư";
+  static const findTutor = "Đăng bài tìm gia sư";
   static const pleasFillAll = "(*)Vui lòng điền đầy đủ các thông tin";
   static const session = "Số buổi:";
   static const chooseSession = "Số buổi/tuần";
+  static const fee = "Giá tiền:";
+  static const chooseFee = "Giá tiền/buổi";
   static const chooseTime = "Chọn khung giờ muốn học";
   static const note = "Yêu cầu/Ghi chú";
+  static const post = "Đăng bài";
+  static const chooseFormTime = "Chọn hình thức học học:";
+  static const startDay = "Ngày bắt đầu:";
+  static const endDay = "Ngày kết thúc";
 }
