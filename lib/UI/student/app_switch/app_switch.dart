@@ -21,7 +21,6 @@ class _StudentState extends State<Student> {
   final List<Widget> _widgetOptions = const <Widget>[
     StudentHome(),
     StudentCalender(),
-    //StudentPost(),
     StudentNoti(),
     StudentAccount()
   ];
@@ -56,10 +55,6 @@ class _StudentState extends State<Student> {
             icon: Icon(Icons.list_alt_rounded),
             label: 'Lịch học',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.add),
-          //   label: 'Post',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_activity),
             label: 'Thanh toán',
