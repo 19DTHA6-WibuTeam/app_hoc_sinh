@@ -1,5 +1,5 @@
 import 'package:doan_chuyen_nganh/UI/student/account/student_account.dart';
-import 'package:doan_chuyen_nganh/UI/student/calender/student.dart';
+import 'package:doan_chuyen_nganh/UI/student/calender/student_calender.dart';
 import 'package:doan_chuyen_nganh/UI/student/home/student_home.dart';
 import 'package:doan_chuyen_nganh/UI/student/noti/student_noti.dart';
 import 'package:doan_chuyen_nganh/UI/student/student_post/student_post.dart';
@@ -50,23 +50,23 @@ class _StudentState extends State<Student> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'Calender',
+            label: 'Lịch học',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.add),
           //   label: 'Post',
           // ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: Icon(Icons.local_activity),
+            label: 'Thanh toán',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Account',
+            label: 'Tài khoản',
           ),
         ],
         currentIndex: _bottomNavIndex,

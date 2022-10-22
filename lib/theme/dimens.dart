@@ -110,6 +110,7 @@ class Dimens {
   static const chooseFee = "Giá tiền/buổi";
   static const chooseTime = "Chọn khung giờ muốn học";
   static const note = "Yêu cầu/Ghi chú";
+  static const learnPlace = "Địa điểm học";
   static const post = "Đăng bài";
   static const chooseFormTime = "Chọn hình thức học học:";
   static const startDay = "Ngày bắt đầu:";

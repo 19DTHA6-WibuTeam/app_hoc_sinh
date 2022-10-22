@@ -21,8 +21,16 @@ final TextEditingController _nameController = TextEditingController();
 final TextEditingController _addressController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 final TextEditingController _noteController = TextEditingController();
+final TextEditingController _learPlaceController = TextEditingController();
 
 class _StudentPostState extends State<StudentPost> {
+  Future<void> _getData() async {
+    _nameController.text = "Wibu";
+    _addressController.text = "Hutech";
+    _phoneController.text = "123456789";
+    _noteController.text = "";
+  }
+
   @override
   void initState() {
     super.initState();
@@ -101,7 +109,7 @@ class _StudentPostState extends State<StudentPost> {
     ];
 
     Rx<DateTime> startDate = DateTime.now().obs;
-    Rx<DateTime> endDate = DateTime.now().obs;
+
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -276,54 +284,6 @@ class _StudentPostState extends State<StudentPost> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        Dimens.endDay,
-                        style: AppTextStyle.titleSmall,
-                      ),
-                      Container(
-                        height: maxHeight * 0.08,
-                        width: maxWidth * 0.6,
-                        padding: EdgeInsets.only(
-                            top: maxHeight * 0.005, bottom: maxHeight * 0.005),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.lightgray,
-                            borderRadius:
-                                BorderRadius.circular(Dimens.RADIUS_10),
-                          ),
-                          child: Obx(
-                            () => OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                      color: AppColors.transparent)),
-                              onPressed: () {
-                                DatePicker.showDatePicker(context,
-                                    showTitleActions: true,
-                                    minTime: DateTime.now()
-                                        .subtract(const Duration(days: 365000)),
-                                    maxTime: DateTime.now(), onConfirm: (date) {
-                                  endDate.value = date;
-                                },
-                                    currentTime: DateTime.now(),
-                                    locale: LocaleType.vi);
-                              },
-                              child: Center(
-                                child: Text(
-                                  DateFormat('dd/MM/yyyy')
-                                      .format(endDate.value),
-                                  style: AppTextStyle.titleSmall
-                                      .copyWith(fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   const Text(
                     Dimens.session,
                     style: AppTextStyle.titleSmall,
@@ -357,6 +317,33 @@ class _StudentPostState extends State<StudentPost> {
                         );
                       },
                     ),
+                  SizedBox(
+                    height: maxHeight * 0.01,
+                  ),
+                  SingleChildScrollView(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.lightgray,
+                        borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: Dimens.PADDING_20),
+                        child: TextField(
+                          controller: _learPlaceController,
+                          scrollPhysics: const NeverScrollableScrollPhysics(),
+                          maxLines: null,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            labelText: Dimens.learnPlace,
+                            labelStyle: AppTextStyle.titleSmall,
+                          ),
+                          style: AppTextStyle.style(
+                            color: Colors.black.withOpacity(0.8),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: maxHeight * 0.01,
                   ),
@@ -419,12 +406,5 @@ class _StudentPostState extends State<StudentPost> {
         ),
       )),
     );
-  }
-
-  Future<void> _getData() async {
-    _nameController.text = "Wibu";
-    _addressController.text = "Hutech";
-    _phoneController.text = "123456789";
-    _noteController.text = "";
   }
 }
