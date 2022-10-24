@@ -1,7 +1,7 @@
 import 'package:doan_chuyen_nganh/UI/student/account/student_account.dart';
-import 'package:doan_chuyen_nganh/UI/student/calender/student_calender.dart';
+import 'package:doan_chuyen_nganh/UI/student/calender/calender_home/student_calender.dart';
 import 'package:doan_chuyen_nganh/UI/student/home/student_home.dart';
-import 'package:doan_chuyen_nganh/UI/student/noti/student_noti.dart';
+import 'package:doan_chuyen_nganh/UI/student/session/session_home/student_session.dart';
 import 'package:doan_chuyen_nganh/UI/student/student_post/student_post.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class _StudentState extends State<Student> {
   final List<Widget> _widgetOptions = const <Widget>[
     StudentHome(),
     StudentCalender(),
-    StudentNoti(),
+    StudentSeesion(),
     StudentAccount()
   ];
 
@@ -57,7 +57,7 @@ class _StudentState extends State<Student> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_activity),
-            label: 'Thanh toán',
+            label: 'Khóa học',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

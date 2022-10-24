@@ -88,7 +88,7 @@ class _StudentHomeState extends State<StudentHome> {
               ],
             ),
             SizedBox(
-              height: mainHeight * 0.8,
+              //height: mainHeight * 0.8,
               width: mainWidth,
               child: StudentGridView(),
             )

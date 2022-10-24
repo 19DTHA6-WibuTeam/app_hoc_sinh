@@ -43,4 +43,16 @@ mixin AppTextStyle {
     fontFamily: "SourceSansPro",
     fontWeight: FontWeight.bold,
   );
+  static const calenderDetailBoldText = TextStyle(
+    fontSize: 21,
+    color: AppColors.dark,
+    fontFamily: "SourceSansPro",
+    fontWeight: FontWeight.bold,
+  );
+  static const calenderDetailDarkText = TextStyle(
+    fontSize: 21,
+    color: AppColors.black,
+    fontFamily: "SourceSansPro",
+    fontWeight: FontWeight.bold,
+  );
 }

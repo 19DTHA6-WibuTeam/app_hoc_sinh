@@ -1,3 +1,4 @@
+import 'package:doan_chuyen_nganh/UI/student/calender/calender_detail/calender_detail.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
@@ -9,6 +10,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class StudentCalender extends StatefulWidget {
   const StudentCalender({super.key});
@@ -20,9 +22,11 @@ class StudentCalender extends StatefulWidget {
 class _StudentCalenderState extends State<StudentCalender> {
   RxString chooseDay =
       DateFormat.yMMMMd().format(DateTime.now()).toString().obs;
-  DateTime _selectedDay = DateTime.now();
+  final Rx<DateTime> _selectedDay = DateTime.now().obs;
+  final Rx<DateTime> _focusedDay = DateTime.now().obs;
   RxList subjectList = [].obs;
-  RxBool _loading = true.obs;
+  final RxBool _loading = true.obs;
+  final CalendarFormat _format = CalendarFormat.week;
   @override
   Widget build(BuildContext context) {
     final double maxHeight = MediaQuery.of(context).size.height;
@@ -31,40 +35,40 @@ class _StudentCalenderState extends State<StudentCalender> {
         body: SafeArea(
       child: Column(
         children: [
-          SizedBox(
-            height: maxHeight * 0.01,
-          ),
           Center(
               child: Obx(
-            () => Text(chooseDay.value,
-                style: AppTextStyle.chooseText.copyWith(
-                    color: AppColors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold)),
+            () => Text(
+              chooseDay.value,
+              style: AppTextStyle.titleLarge,
+            ),
           )),
-          SizedBox(
-            height: maxHeight * 0.02,
-          ),
-          Container(
-            padding:
-                EdgeInsets.only(left: maxWidth * 0.02, right: maxWidth * 0.02),
-            child: DatePicker(
-              DateTime.now(),
-              height: maxHeight * 0.1,
-              width: maxWidth * 0.15,
-              initialSelectedDate: DateTime.now(),
-              selectedTextColor: AppColors.white,
-              selectionColor: AppColors.primary,
-              dateTextStyle: AppTextStyle.primaryText.copyWith(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.gray),
-              onDateChange: (selectedDate) {
+          Obx(
+            () => TableCalendar(
+              firstDay: DateTime(1990),
+              lastDay: DateTime(2050),
+              focusedDay: _selectedDay.value,
+              calendarFormat: _format,
+              startingDayOfWeek: StartingDayOfWeek.sunday,
+              daysOfWeekVisible: true,
+              onDaySelected: ((selectedDay, focusedDay) {
+                _focusedDay.value = selectedDay;
+                _selectedDay.value = selectedDay;
                 chooseDay.value =
-                    DateFormat.yMMMMd().format(selectedDate).toString();
-                _selectedDay = selectedDate;
+                    DateFormat.yMMMMd().format(selectedDay).toString();
                 _loading.value = !_loading.value;
-              },
+              }),
+              calendarStyle: const CalendarStyle(
+                  isTodayHighlighted: true,
+                  selectedDecoration: BoxDecoration(
+                      color: AppColors.primary, shape: BoxShape.circle),
+                  selectedTextStyle: TextStyle(color: AppColors.white)),
+              selectedDayPredicate: ((day) {
+                return isSameDay(_selectedDay.value, day);
+              }),
+              headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  formatButtonShowsNext: true),
             ),
           ),
           SizedBox(
@@ -75,7 +79,9 @@ class _StudentCalenderState extends State<StudentCalender> {
                   child: ListView.builder(
                   itemBuilder: (_, context) {
                     return GestureDetector(
-                      onTap: null,
+                      onTap: () {
+                        Get.to(const CalenderDetail());
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: maxWidth * 0.05),
@@ -94,19 +100,14 @@ class _StudentCalenderState extends State<StudentCalender> {
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SizedBox(
-                                  height: maxHeight * 0.01,
-                                ),
                                 Text(
                                   "Môn Học",
                                   style: AppTextStyle.chooseText.copyWith(
                                       fontSize: maxWidth * 0.07,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.white),
-                                ),
-                                SizedBox(
-                                  height: maxHeight * 0.01,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,27 +127,6 @@ class _StudentCalenderState extends State<StudentCalender> {
                                     )
                                   ],
                                 ),
-                                SizedBox(
-                                  height: maxHeight * 0.005,
-                                ),
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   children: [
-                                //     Icon(
-                                //       Icons.person,
-                                //       color: AppColors.white,
-                                //       size: maxWidth * 0.06,
-                                //     ),
-                                //     const SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Text(
-                                //       "Tên gia sư",
-                                //       style: AppTextStyle.chooseText
-                                //           .copyWith(fontSize: maxWidth * 0.05),
-                                //     ),
-                                //   ],
-                                // ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -159,15 +139,14 @@ class _StudentCalenderState extends State<StudentCalender> {
                                       width: 5,
                                     ),
                                     SizedBox(
-                                      height: maxHeight * 0.1,
                                       width: maxWidth * 0.695,
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "54 Đường 12D, Khu phố Chân Phúc Cẩm, quận 9",
+                                          "54 Đường 12D, Khu phố Chân Phúc Cẩm,Phường Long Thạnh Mỹ, Quận 9",
                                           style: AppTextStyle.chooseText
                                               .copyWith(
-                                                  fontSize: maxWidth * 0.05),
+                                                  fontSize: maxWidth * 0.04),
                                           overflow: TextOverflow.visible,
                                         ),
                                       ),
@@ -203,7 +182,7 @@ class _StudentCalenderState extends State<StudentCalender> {
                   itemCount: 4,
                 ))
               : SizedBox(
-                  height: maxHeight * 0.7,
+                  height: maxHeight * 0.5,
                   child: Center(
                     child: Text(
                       "Không học nhưng cũng phải nghỉ ngơi và ôn tập nhé!!",
