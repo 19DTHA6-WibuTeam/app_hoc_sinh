@@ -78,10 +78,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.65,
                 padding: const EdgeInsets.only(
-                    top: Dimens.PADDING_20,
-                    left: Dimens.PADDING_20,
-                    right: Dimens.PADDING_20,
-                    bottom: Dimens.PADDING_20),
+                  // top: Dimens.PADDING_20,
+                  left: Dimens.PADDING_20,
+                  right: Dimens.PADDING_20,
+                ),
+                // bottom: Dimens.PADDING_20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -245,6 +246,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         )
                       ],
                     ),
+                    const SizedBox(height: Dimens.HEIGHT_20),
                   ],
                 ),
               )

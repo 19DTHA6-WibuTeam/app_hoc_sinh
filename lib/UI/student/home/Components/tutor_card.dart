@@ -1,13 +1,28 @@
+import 'package:doan_chuyen_nganh/UI/student/home/Components/gender_icon.dart';
+import 'package:doan_chuyen_nganh/UI/student/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TutorCard_Grid extends StatefulWidget {
   int listIndex;
+  String avatar;
+  String name;
+  String gender;
+  String subject;
+  int age;
+  int tutorId;
 
-  TutorCard_Grid({
-    Key? key,
-    required this.listIndex,
-  }) : super(key: key);
+  TutorCard_Grid(
+      {Key? key,
+      required this.listIndex,
+      required this.avatar,
+      required this.gender,
+      required this.name,
+      required this.subject,
+      required this.age,
+      required this.tutorId})
+      : super(key: key);
 
   @override
   State<TutorCard_Grid> createState() => _TutorCard_GridState();
@@ -23,7 +38,11 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
       decoration: const BoxDecoration(color: Colors.white),
       padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.02),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Get.to(TutorDetail(
+            tutorId: widget.tutorId,
+          ));
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,8 +53,7 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
                   width: maxWidth * 0.7,
                   height: maxHeight * 0.22,
                   child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Image.asset(Images.imageDefault))),
+                      fit: BoxFit.fill, child: Image.asset(widget.avatar))),
             ),
             Padding(
                 padding: const EdgeInsets.only(top: 5, right: 9),
@@ -43,7 +61,7 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tutor Name",
+                      widget.name,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontSize: 12.3, fontWeight: FontWeight.w500),
                     ),
@@ -61,7 +79,7 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Subject",
+                            widget.subject,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
@@ -72,7 +90,7 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '21 year olds',
+                            '${widget.age} tuổi',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
@@ -80,7 +98,7 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
                           ))
                     ],
                   ),
-                  GenderIcon(gender: "Male"),
+                  GenderIcon(gender: widget.gender),
                 ],
               ),
             )
@@ -88,43 +106,5 @@ class _TutorCard_GridState extends State<TutorCard_Grid> {
         ),
       ),
     );
-  }
-}
-
-class GenderIcon extends StatefulWidget {
-  String gender;
-
-  GenderIcon({
-    Key? key,
-    required this.gender,
-  }) : super(key: key);
-  @override
-  State<GenderIcon> createState() => _RenderGenderIconState();
-}
-
-class _RenderGenderIconState extends State<GenderIcon> {
-  @override
-  Widget build(BuildContext context) {
-    String gender = widget.gender;
-
-    return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(
-                width: 0.5, color: const Color.fromARGB(26, 0, 0, 0))),
-        child: Padding(
-          padding: const EdgeInsets.all(1.9),
-          child: gender == 'Male'
-              ? const Icon(
-                  Icons.male_rounded,
-                  color: Colors.blue,
-                  size: 18,
-                )
-              : const Icon(
-                  Icons.female_rounded,
-                  color: Colors.pink,
-                  size: 18,
-                ),
-        ));
   }
 }
