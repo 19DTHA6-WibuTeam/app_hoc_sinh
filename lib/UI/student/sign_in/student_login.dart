@@ -1,5 +1,7 @@
 import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
 import 'package:doan_chuyen_nganh/UI/student/sign_up/sign_up_screen.dart';
+import 'package:doan_chuyen_nganh/api/login.dart';
+import 'package:doan_chuyen_nganh/models/user.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
@@ -18,7 +20,7 @@ class StudentLoginScreen extends StatefulWidget {
 
 class _StudentLoginScreenState extends State<StudentLoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
@@ -84,10 +86,10 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                 child: Column(
                   children: [
                     AppTextField(
-                      labelText: Dimens.Phone,
+                      labelText: Dimens.Email,
                       enabled: true,
                       obscureText: false,
-                      controllerName: _phoneController,
+                      controllerName: _emailController,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     AppTextFieldPass(
@@ -99,24 +101,32 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                       height: Dimens.HEIGHT_55,
                       //padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.RADIUS_10),
-                            )),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(Dimens.SignIn,
-                                style: AppTextStyle.style(
-                                    fontSize: Dimens.TEXT_SIZE_20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        onPressed: () => {Get.offAll(const Student())},
-                      ),
+                          style: ElevatedButton.styleFrom(
+                              primary: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.RADIUS_10),
+                              )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(Dimens.SignIn,
+                                  style: AppTextStyle.style(
+                                      fontSize: Dimens.TEXT_SIZE_20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          onPressed: () async {
+                            User? user = await fetchLogin(_emailController.text,
+                                _passwordController.text);
+                            if (user != null) {
+                              saveLogin(user);
+                              print(user.user_email);
+                              Get.offAll(const Student());
+                            } else
+                              print("something wrong");
+                          }),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Row(
@@ -130,7 +140,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.to(const SignUpScreen())},
+                          onTap: () {
+                            Get.to(const SignUpScreen());
+                          },
                           child: Text(
                             Dimens.SignUp,
                             style: AppTextStyle.style(

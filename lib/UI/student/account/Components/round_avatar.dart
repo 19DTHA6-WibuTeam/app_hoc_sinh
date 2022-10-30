@@ -11,16 +11,18 @@ class RoundAvatar extends StatefulWidget {
   double rightPadding;
   double bottomPadding;
   double radius;
+  bool initAvatar;
 
-  RoundAvatar({
-    Key? key,
-    required this.imagePath,
-    required this.leftPadding,
-    required this.topPadding,
-    required this.rightPadding,
-    required this.bottomPadding,
-    required this.radius,
-  }) : super(key: key);
+  RoundAvatar(
+      {Key? key,
+      required this.imagePath,
+      required this.leftPadding,
+      required this.topPadding,
+      required this.rightPadding,
+      required this.bottomPadding,
+      required this.radius,
+      required this.initAvatar})
+      : super(key: key);
 
   @override
   State<RoundAvatar> createState() => _RoundAvatarState();
@@ -35,33 +37,22 @@ class _RoundAvatarState extends State<RoundAvatar> {
     double rightPadding = widget.rightPadding;
     double bottomPadding = widget.bottomPadding;
     double radius = widget.radius;
+    bool initAvatar = widget.initAvatar;
 
-    return GestureDetector(
-        onTap: () => pickImage(ImageSource.gallery),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-              leftPadding, topPadding, rightPadding, bottomPadding),
-          child: CircleAvatar(
-            radius: radius,
-            backgroundColor: Colors.transparent,
-            backgroundImage: AssetImage(imagePath),
-          ),
-        ));
-  }
-
-  File? image;
-
-  Future pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-
-      setState(() => this.image = imageTemporary);
-    } on PlatformException catch (e) {
-      print('Failed to pick image');
-    }
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+          leftPadding, topPadding, rightPadding, bottomPadding),
+      child: initAvatar
+          ? CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(imagePath),
+            )
+          : CircleAvatar(
+              radius: radius,
+              backgroundColor: Colors.transparent,
+              backgroundImage: AssetImage(imagePath),
+            ),
+    );
   }
 }

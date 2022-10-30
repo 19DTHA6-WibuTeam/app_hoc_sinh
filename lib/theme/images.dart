@@ -29,4 +29,5 @@ class Images {
   static const String imageSplash = '$imagePath/splash.png';
   static const String imageDefault = '$imagePath/cat.jpg';
   static const String imageMinh = '$imagePath/minh.jpg';
+  static const String imageDefault1 = '$imagePath/default-avatar.jpg';
 }

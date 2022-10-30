@@ -1,4 +1,6 @@
 import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/api/user.dart';
+import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
@@ -25,17 +27,19 @@ final TextEditingController _learPlaceController = TextEditingController();
 
 class _StudentPostState extends State<StudentPost> {
   Future<void> _getData() async {
-    _nameController.text = "Wibu";
-    _addressController.text = "Hutech";
-    _phoneController.text = "123456789";
+    var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
+        BaseSharedPreferences.getString('token'));
+    _nameController.text = user?.user_fullname ?? '';
+    _phoneController.text = user?.user_phone_number ?? '';
+    _addressController.text = user?.user_address ?? '';
     _noteController.text = "";
   }
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await _getData();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _getData();
     });
   }
 

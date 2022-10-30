@@ -1,4 +1,5 @@
 import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
+import 'package:doan_chuyen_nganh/api/register.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
@@ -22,9 +23,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _rePassController = TextEditingController();
-  List<String> genderList = ['Nam', 'Nữ', 'Khác'];
+  List<String> genderList = ['Nữ', 'Nam'];
+  String? dropdownValue;
 
   Rx<DateTime> pickedDate = DateTime.now().obs;
   @override
@@ -78,11 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.65,
                 padding: const EdgeInsets.only(
-                  // top: Dimens.PADDING_20,
                   left: Dimens.PADDING_20,
                   right: Dimens.PADDING_20,
                 ),
-                // bottom: Dimens.PADDING_20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -180,15 +181,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: maxHeight * 0.07,
-                          width: maxWidth * 0.365,
-                          child: CustomDropdownButton(
-                            itemsList: genderList,
-                            hintText: "Giới tính",
-                            enabled: true,
-                          ),
-                        ),
+                            height: maxHeight * 0.07,
+                            width: maxWidth * 0.365,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.lightgray,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.RADIUS_10),
+                              ),
+                              child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: Dimens.PADDING_20),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      hint: Text("Giới tính",
+                                          style: AppTextStyle.style(
+                                            color:
+                                                Colors.black.withOpacity(0.8),
+                                          )),
+                                      value: dropdownValue,
+                                      elevation: 16,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                        });
+                                      },
+                                      items: genderList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              style: AppTextStyle.style(
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                              )),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )),
+                            )
+                            // child: CustomDropdownButton(
+                            //   itemsList: genderList,
+                            //   hintText: "Giới tính",
+                            //   enabled: true,
+                            // ),
+                            ),
                       ],
+                    ),
+                    SizedBox(height: maxHeight * 0.01),
+                    AppTextField(
+                      labelText: Dimens.Email,
+                      enabled: true,
+                      obscureText: false,
+                      controllerName: _emailController,
                     ),
                     SizedBox(height: maxHeight * 0.01),
                     AppTextFieldPass(
@@ -272,22 +319,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Mật khẩu không trùng khớp")));
     } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                  title: const Text(
-                    Dimens.CreateDone,
-                    style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        //_customerList[0].password = _newPasswordController.text;
-                        Get.off(const StudentLoginScreen());
-                      },
-                      child: const Text('OK'),
+      final birthday = pickedDate.value.toString().split(' ');
+      String gender = "";
+      if (dropdownValue == "Nữ") {
+        gender = "0";
+      } else {
+        gender = "1";
+      }
+      bool? success = await fetchRegister(
+          _nameController.text,
+          _emailController.text,
+          _passController.text,
+          _addressController.text,
+          birthday[0],
+          gender,
+          _phoneController.text);
+      dismissDialog() {
+        Get.back();
+      }
+
+      if (success == true) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      Dimens.CreateDone,
+                      style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
                     ),
-                  ]));
+                    content: const Text(
+                      Dimens.SignInContinue,
+                      style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          dismissDialog();
+                          Get.off(const StudentLoginScreen());
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ]));
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      Dimens.createWrong,
+                      style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          dismissDialog();
+                        },
+                        child: const Text('Đóng'),
+                      ),
+                    ]));
+      }
     }
   }
 }

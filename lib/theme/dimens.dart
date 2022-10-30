@@ -3,7 +3,7 @@
 class Dimens {
   Dimens._();
 
-  static const String apiKey = "AIzaSyAuKUcUhl_6dbInI9z24DSXdWlX1_cvBns";
+  static const String API_URL = 'https://ttgs-api.phatnef.me/';
 
   // PADDING
 
@@ -85,6 +85,7 @@ class Dimens {
   static const YetAccount = "Đã có tài khoản? ";
   static const Close = "Đóng";
   static const CreateDone = "Tạo tài khoản thành công!";
+  static const createWrong = "Tài khoản đã tồn tại!";
   static const Yes = "Xác nhận";
   static const student = "Học sinh/Phụ Huynh";
   static const welcomeStudent = "Welcome";
@@ -124,4 +125,5 @@ class Dimens {
   static const learningFee = "Học phí: ";
   static const status = "Tình trạng: ";
   static const sessionDetail = "Chi tiết khóa học";
+  static const continueLearn = "Học, Học nữa, Học mãi!";
 }

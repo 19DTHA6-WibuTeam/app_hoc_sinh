@@ -1,3 +1,4 @@
+import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _AppState extends State<App> {
     return GetMaterialApp(
       color: AppColors.primary,
       theme: defaultTheme,
-      initialRoute: ManagerRoutes.loginScreen,
+      initialRoute: ManagerRoutes.splashScreen,
       //MANAGERS ROUTES ALL APP
       routes: {
         ...ManagerRoutes.manager,
