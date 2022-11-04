@@ -1,6 +1,9 @@
 import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
+
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
+import 'package:doan_chuyen_nganh/models/time&subject.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
@@ -19,13 +22,32 @@ class StudentPost extends StatefulWidget {
   State<StudentPost> createState() => _StudentPostState();
 }
 
-final TextEditingController _nameController = TextEditingController();
-final TextEditingController _addressController = TextEditingController();
-final TextEditingController _phoneController = TextEditingController();
-final TextEditingController _noteController = TextEditingController();
-final TextEditingController _learPlaceController = TextEditingController();
-
 class _StudentPostState extends State<StudentPost> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _learPlaceController = TextEditingController();
+  final TextEditingController _weekController = TextEditingController();
+
+  RxList<String> subjectList = [Dimens.chooseSubject].obs;
+  RxString subjectValue = "".obs;
+  RxList<String> sessionTimeList = [Dimens.chooseTime1].obs;
+  RxString sessionTimeValue = "".obs;
+  RxList<String> feeList = [Dimens.chooseFee].obs;
+  RxString feeValue = "".obs;
+
+  @override
+  void initState() {
+    super.initState();
+    subjectValue.value = subjectList[0];
+    sessionTimeValue.value = sessionTimeList[0];
+    feeValue.value = feeList[0];
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await _getData();
+    });
+  }
+
   Future<void> _getData() async {
     var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token'));
@@ -33,86 +55,57 @@ class _StudentPostState extends State<StudentPost> {
     _phoneController.text = user?.user_phone_number ?? '';
     _addressController.text = user?.user_address ?? '';
     _noteController.text = "";
+
+    List<MonHoc>? subjectListAPI = await getSubjectList();
+    subjectList = [Dimens.chooseSubject].obs;
+    for (int i = 0; i < subjectListAPI!.length; i++) {
+      String subjectCode = subjectListAPI[i].maMonHoc.toString();
+      String subjectName = subjectListAPI[i].tenMonHoc.toString();
+      subjectList.add('$subjectCode.$subjectName');
+    }
+
+    List<CaHoc>? sessionTimeListAPI = await getSessionTimeList();
+    sessionTimeList = [Dimens.chooseTime1].obs;
+    for (int i = 0; i < sessionTimeListAPI!.length; i++) {
+      String timeCode = sessionTimeListAPI[i].maCaHoc.toString();
+      String startTime = sessionTimeListAPI[i].gioBatDau.toString();
+      String endTime = sessionTimeListAPI[i].gioKetThuc.toString();
+      sessionTimeList.add('$timeCode. $startTime-$endTime');
+    }
+
+    List<SoTienBuoiHoc>? feeListAPI = await getFeeList();
+    feeList = [Dimens.chooseFee].obs;
+    for (int i = 0; i < feeListAPI!.length; i++) {
+      String fee = feeListAPI[i].soTien.toString();
+      feeList.add('$fee VNĐ');
+    }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _getData();
-    });
-  }
+  List<String> timeList = [
+    'Thứ 2',
+    'Thứ 3',
+    'Thứ 4',
+    'Thứ 5',
+    'Thứ 6',
+    'Thứ 7',
+    'Chủ Nhật'
+  ];
+  List<RxBool> timeCheckList = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+  ];
+
+  Rx<DateTime> startDate = DateTime.now().obs;
 
   @override
   Widget build(BuildContext context) {
     final double maxHeight = MediaQuery.of(context).size.height;
     final double maxWidth = MediaQuery.of(context).size.width;
-    List<String> classList = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12'
-    ];
-    List<String> subjectList = [
-      'Toán',
-      'Vật lý',
-      'Hóa',
-      'Tiếng Anh',
-      'Văn',
-      'Địa lý',
-      'Lịch sử',
-    ];
-    List<String> sessionList = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-    ];
-    List<String> timeList = [
-      '7:00 - 9:00',
-      '9:00 - 11:00',
-      '13:00 - 15:00',
-      '15:00 - 17:00',
-      '17:00 - 19:00',
-      '19:00 - 21:00',
-    ];
-    List<RxBool> timeCheckList = [
-      false.obs,
-      false.obs,
-      false.obs,
-      false.obs,
-      false.obs,
-      false.obs,
-    ];
-    List<String> formList = [
-      'Online',
-      'Offline',
-    ];
-    List<RxBool> formLearnList = [
-      false.obs,
-      false.obs,
-    ];
-    List<String> feeList = [
-      '100.000 VNĐ',
-      '200.000 VNĐ',
-      '300.000 VNĐ',
-      '400.000 VNĐ',
-      '500.000 VNĐ',
-      '600.000 VNĐ',
-    ];
-
-    Rx<DateTime> startDate = DateTime.now().obs;
 
     return Scaffold(
       body: SafeArea(
@@ -183,63 +176,6 @@ class _StudentPostState extends State<StudentPost> {
                   SizedBox(
                     height: maxHeight * 0.01,
                   ),
-                  const Text(
-                    Dimens.classRoom,
-                    style: AppTextStyle.titleSmall,
-                  ),
-                  CustomDropdownButton(
-                    itemsList: classList,
-                    hintText: Dimens.chooseClass,
-                    enabled: true,
-                  ),
-                  SizedBox(
-                    height: maxHeight * 0.01,
-                  ),
-                  const Text(
-                    Dimens.subject,
-                    style: AppTextStyle.titleSmall,
-                  ),
-                  CustomDropdownButton(
-                    itemsList: subjectList,
-                    hintText: Dimens.chooseSubject,
-                    enabled: true,
-                  ),
-                  const Text(
-                    Dimens.chooseFormTime,
-                    style: AppTextStyle.titleSmall,
-                  ),
-                  for (int i = 0; i < 2; i++)
-                    Obx(
-                      () {
-                        return Row(
-                          children: [
-                            Checkbox(
-                                shape: const CircleBorder(),
-                                value: formLearnList[i].value,
-                                activeColor: AppColors.black,
-                                onChanged: (value) {
-                                  formLearnList[i].value = value!;
-                                }),
-                            Text(
-                              formList[i],
-                              style: AppTextStyle.titleSmall,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  const Text(
-                    Dimens.fee,
-                    style: AppTextStyle.titleSmall,
-                  ),
-                  CustomDropdownButton(
-                    itemsList: feeList,
-                    hintText: Dimens.chooseFee,
-                    enabled: true,
-                  ),
-                  SizedBox(
-                    height: maxHeight * 0.01,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -288,20 +224,144 @@ class _StudentPostState extends State<StudentPost> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: maxHeight * 0.01,
+                  ),
+                  AppTextField(
+                    labelText: Dimens.week,
+                    enabled: true,
+                    obscureText: false,
+                    controllerName: _weekController,
+                    keyboardType: TextInputType.number,
+                  ),
                   const Text(
-                    Dimens.session,
+                    Dimens.subject,
                     style: AppTextStyle.titleSmall,
                   ),
-                  CustomDropdownButton(
-                    itemsList: sessionList,
-                    hintText: Dimens.chooseSession,
-                    enabled: true,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.lightgray,
+                      borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
+                    ),
+                    child: Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.only(left: Dimens.PADDING_20),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Text(Dimens.chooseTime1,
+                                style: AppTextStyle.style(
+                                  color: Colors.black.withOpacity(0.8),
+                                )),
+                            value: subjectValue.value,
+                            elevation: 16,
+                            onChanged: (String? newValue) {
+                              subjectValue.value = newValue!;
+                            },
+                            items: subjectList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: AppTextStyle.style(
+                                      color: Colors.black.withOpacity(0.8),
+                                    )),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: maxHeight * 0.01,
+                  ),
+                  const Text(
+                    Dimens.fee,
+                    style: AppTextStyle.titleSmall,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.lightgray,
+                      borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
+                    ),
+                    child: Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.only(left: Dimens.PADDING_20),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Text(Dimens.chooseFee,
+                                style: AppTextStyle.style(
+                                  color: Colors.black.withOpacity(0.8),
+                                )),
+                            value: feeValue.value,
+                            elevation: 16,
+                            onChanged: (String? newValue) {
+                              feeValue.value = newValue!;
+                            },
+                            items: feeList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: AppTextStyle.style(
+                                      color: Colors.black.withOpacity(0.8),
+                                    )),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: maxHeight * 0.01,
                   ),
                   const Text(
                     Dimens.chooseTime,
                     style: AppTextStyle.titleSmall,
                   ),
-                  for (int i = 0; i < 6; i++)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.lightgray,
+                      borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
+                    ),
+                    child: Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.only(left: Dimens.PADDING_20),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Text(Dimens.chooseTime1,
+                                style: AppTextStyle.style(
+                                  color: Colors.black.withOpacity(0.8),
+                                )),
+                            value: sessionTimeValue.value,
+                            elevation: 16,
+                            onChanged: (String? newValue) {
+                              sessionTimeValue.value = newValue!;
+                            },
+                            items: sessionTimeList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: AppTextStyle.style(
+                                      color: Colors.black.withOpacity(0.8),
+                                    )),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    Dimens.learningDay,
+                    style: AppTextStyle.titleSmall,
+                  ),
+                  for (int i = 0; i < timeList.length; i++)
                     Obx(
                       () {
                         return Row(
@@ -399,7 +459,31 @@ class _StudentPostState extends State<StudentPost> {
                                 )),
                           ],
                         ),
-                        onPressed: () => {Get.offAll(const Student())},
+                        onPressed: () {
+                          Get.offAll(const Student());
+                          String subject = subjectValue.value;
+                          subject = subject[0];
+                          print(subject);
+                          print(
+                              DateFormat('yyyy-MM-dd').format(startDate.value));
+                          print(_weekController.text);
+                          String fee = feeValue.value;
+                          fee = fee.substring(0, fee.length - 4);
+                          print(fee);
+                          String time = sessionTimeValue.value;
+                          time = time[0];
+                          print(time);
+                          String timeCheck = "";
+                          for (int i = 0; i < timeCheckList.length; i++) {
+                            if (timeCheckList[i].value == true) {
+                              String add = (i + 1).toString();
+                              timeCheck += '$add,';
+                            }
+                          }
+                          timeCheck =
+                              timeCheck.substring(0, timeCheck.length - 1);
+                          print(timeCheck);
+                        },
                       ),
                     ),
                   )

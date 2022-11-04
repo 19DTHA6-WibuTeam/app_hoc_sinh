@@ -79,7 +79,7 @@ class SessionDetail extends StatelessWidget {
               ),
               Row(
                 children: const [
-                  Text(Dimens.chooseSession,
+                  Text(Dimens.chooseTime1,
                       style: AppTextStyle.calenderDetailBoldText),
                   SizedBox(
                     width: Dimens.WIDTH_5,

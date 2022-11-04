@@ -9,13 +9,15 @@ class AppTextField extends StatelessWidget {
       required this.labelText,
       required this.enabled,
       required this.obscureText,
-      required this.controllerName})
+      required this.controllerName,
+      this.keyboardType = TextInputType.text})
       : super(key: key);
 
   final String labelText;
   final bool obscureText;
   final bool enabled;
   TextEditingController controllerName;
+  TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class AppTextField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: Dimens.PADDING_20),
         child: TextFormField(
+          keyboardType: keyboardType,
           enabled: enabled,
           controller: controllerName,
           obscureText: obscureText,

@@ -106,10 +106,10 @@ class Dimens {
   static const findTutor = "Đăng bài tìm gia sư";
   static const pleasFillAll = "(*)Vui lòng điền đầy đủ các thông tin";
   static const session = "Số buổi: ";
-  static const chooseSession = "Số buổi/tuần";
+  static const chooseTime1 = "Khung giờ học";
   static const fee = "Giá tiền:";
   static const chooseFee = "Giá tiền/buổi";
-  static const chooseTime = "Chọn khung giờ muốn học";
+  static const chooseTime = "Khung giờ học: ";
   static const note = "Yêu cầu/Ghi chú";
   static const learnPlace = "Địa điểm học";
   static const post = "Đăng bài";
@@ -126,4 +126,5 @@ class Dimens {
   static const status = "Tình trạng: ";
   static const sessionDetail = "Chi tiết khóa học";
   static const continueLearn = "Học, Học nữa, Học mãi!";
+  static const week = "Số tuần học ";
 }
