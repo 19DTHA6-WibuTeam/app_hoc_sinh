@@ -46,6 +46,7 @@ class _StudentAccountState extends State<StudentAccount> {
       isFeMale.value = false;
     }
     avatar.value = user?.avatar ?? '';
+    setState(() {});
   }
 
   RxInt gender = 0.obs;
@@ -223,16 +224,6 @@ class _StudentAccountState extends State<StudentAccount> {
                             ),
                           ),
                         ),
-                        // SizedBox(
-                        //   width: maxWidth * 0.35,
-                        //   child: CustomDropdownButton(
-                        //     itemsList: genderList,
-                        //     hintText: isFeMale.value
-                        //         ? genderList[0]
-                        //         : genderList[1],
-                        //     enabled: enabled.value,
-                        //   ),
-                        // ),
                         SizedBox(
                           width: maxWidth * 0.35,
                           child: Container(

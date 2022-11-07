@@ -1,8 +1,10 @@
 import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
 
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
+import 'package:doan_chuyen_nganh/models/session.dart';
 import 'package:doan_chuyen_nganh/models/time&subject.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
@@ -27,7 +29,7 @@ class _StudentPostState extends State<StudentPost> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
-  final TextEditingController _learPlaceController = TextEditingController();
+  final TextEditingController _classController = TextEditingController();
   final TextEditingController _weekController = TextEditingController();
 
   RxList<String> subjectList = [Dimens.chooseSubject].obs;
@@ -79,6 +81,7 @@ class _StudentPostState extends State<StudentPost> {
       String fee = feeListAPI[i].soTien.toString();
       feeList.add('$fee VNĐ');
     }
+    setState(() {});
   }
 
   List<String> timeList = [
@@ -228,12 +231,23 @@ class _StudentPostState extends State<StudentPost> {
                     height: maxHeight * 0.01,
                   ),
                   AppTextField(
+                    labelText: Dimens.chooseClass,
+                    enabled: true,
+                    obscureText: false,
+                    controllerName: _classController,
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(
+                    height: maxHeight * 0.01,
+                  ),
+                  AppTextField(
                     labelText: Dimens.week,
                     enabled: true,
                     obscureText: false,
                     controllerName: _weekController,
                     keyboardType: TextInputType.number,
                   ),
+
                   const Text(
                     Dimens.subject,
                     style: AppTextStyle.titleSmall,
@@ -381,33 +395,33 @@ class _StudentPostState extends State<StudentPost> {
                         );
                       },
                     ),
-                  SizedBox(
-                    height: maxHeight * 0.01,
-                  ),
-                  SingleChildScrollView(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.lightgray,
-                        borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: Dimens.PADDING_20),
-                        child: TextField(
-                          controller: _learPlaceController,
-                          scrollPhysics: const NeverScrollableScrollPhysics(),
-                          maxLines: null,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            labelText: Dimens.learnPlace,
-                            labelStyle: AppTextStyle.titleSmall,
-                          ),
-                          style: AppTextStyle.style(
-                            color: Colors.black.withOpacity(0.8),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: maxHeight * 0.01,
+                  // ),
+                  // SingleChildScrollView(
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.lightgray,
+                  //       borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: Dimens.PADDING_20),
+                  //       child: TextField(
+                  //         controller: _learPlaceController,
+                  //         scrollPhysics: const NeverScrollableScrollPhysics(),
+                  //         maxLines: null,
+                  //         decoration: const InputDecoration(
+                  //           border: InputBorder.none,
+                  //           labelText: Dimens.learnPlace,
+                  //           labelStyle: AppTextStyle.titleSmall,
+                  //         ),
+                  //         style: AppTextStyle.style(
+                  //           color: Colors.black.withOpacity(0.8),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: maxHeight * 0.01,
                   ),
@@ -459,20 +473,16 @@ class _StudentPostState extends State<StudentPost> {
                                 )),
                           ],
                         ),
-                        onPressed: () {
-                          Get.offAll(const Student());
+                        onPressed: () async {
                           String subject = subjectValue.value;
                           subject = subject[0];
-                          print(subject);
-                          print(
-                              DateFormat('yyyy-MM-dd').format(startDate.value));
-                          print(_weekController.text);
+
                           String fee = feeValue.value;
                           fee = fee.substring(0, fee.length - 4);
-                          print(fee);
+
                           String time = sessionTimeValue.value;
                           time = time[0];
-                          print(time);
+
                           String timeCheck = "";
                           for (int i = 0; i < timeCheckList.length; i++) {
                             if (timeCheckList[i].value == true) {
@@ -482,7 +492,60 @@ class _StudentPostState extends State<StudentPost> {
                           }
                           timeCheck =
                               timeCheck.substring(0, timeCheck.length - 1);
-                          print(timeCheck);
+
+                          bool? success = await postSession(
+                            BaseSharedPreferences.getString('token'),
+                            subject,
+                            _classController.text,
+                            _nameController.text,
+                            _addressController.text,
+                            _phoneController.text,
+                            _weekController.text,
+                            fee,
+                            time,
+                            timeCheck,
+                            _noteController.text,
+                          );
+                          dismissDialog() {
+                            Get.back();
+                          }
+
+                          if (success == true) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                        title: const Text(
+                                          Dimens.postDone,
+                                          style: TextStyle(
+                                              fontSize: Dimens.TEXT_SIZE_14),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              dismissDialog();
+                                              Get.offAll(const Student());
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ]));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                        title: const Text(
+                                          Dimens.postWrong,
+                                          style: TextStyle(
+                                              fontSize: Dimens.TEXT_SIZE_14),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              dismissDialog();
+                                            },
+                                            child: const Text('Đóng'),
+                                          ),
+                                        ]));
+                          }
                         },
                       ),
                     ),

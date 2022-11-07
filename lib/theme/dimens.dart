@@ -115,6 +115,7 @@ class Dimens {
   static const post = "Đăng bài";
   static const chooseFormTime = "Chọn hình thức học học:";
   static const startDay = "Ngày bắt đầu:";
+  static const inputDay = "Ngày đăng ký:";
   static const endDay = "Ngày kết thúc";
   static const calenderDetail = "Chi tiết buổi học";
   static const learningDay = "Ngày học: ";
@@ -127,4 +128,7 @@ class Dimens {
   static const sessionDetail = "Chi tiết khóa học";
   static const continueLearn = "Học, Học nữa, Học mãi!";
   static const week = "Số tuần học ";
+  static const deleteSession = "Hủy đăng ký";
+  static const postDone = "Đăng bài thành công!";
+  static const postWrong = "Lỗi roài!";
 }
