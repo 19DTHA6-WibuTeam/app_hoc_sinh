@@ -1,5 +1,8 @@
 import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
 import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
+import 'package:doan_chuyen_nganh/api/logout.dart';
+import 'package:doan_chuyen_nganh/api/user.dart';
+import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_filed_pass.dart';
@@ -147,6 +150,9 @@ class _ChangePassPageState extends State<ChangePassPage> {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Vui lòng nhập đầy đủ thông tin")));
+    } else if (_oldPasswordController.text == _newPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Mật khẩu cũ giống mật khẩu mới")));
     } else if (_newPasswordController.text != _repeatPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Mật khẩu không trùng khớp")));
@@ -161,22 +167,48 @@ class _ChangePassPageState extends State<ChangePassPage> {
                       child: const Text('Không'),
                     ),
                     TextButton(
-                      onPressed: () {
-                        //_showSuccessDialog(context);
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                    title: const Text(
-                                        'Đổi mật khẩu thành công! Vui lòng đăng nhập lại'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.offAll(
-                                              const StudentLoginScreen());
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ]));
+                      onPressed: () async {
+                        bool isChanged = await changePassword(
+                            BaseSharedPreferences.getString('token'),
+                            _oldPasswordController.text,
+                            _newPasswordController.text);
+                        if (isChanged == true) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                      title: const Text(
+                                          'Đổi mật khẩu thành công! Vui lòng đăng nhập lại'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () async {
+                                            dismissDialog() {
+                                              Get.back();
+                                            }
+
+                                            dismissDialog();
+                                            await logout();
+                                            Get.offAll(
+                                                const StudentLoginScreen());
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ]));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                      title: const Text(
+                                          'Mật khẩu cũ không chính xác!'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            Get.back();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ]));
+                        }
                       },
                       child: const Text('Có'),
                     ),

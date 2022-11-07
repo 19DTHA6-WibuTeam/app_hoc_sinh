@@ -21,3 +21,24 @@ Future<User?> getUser(Future<String> _userId, Future<String> _token) async {
   } else
     return null;
 }
+
+Future<bool> changePassword(
+    Future<String> _token, String oldPass, String newPass) async {
+  String token = await _token;
+  var map = new Map<String, dynamic>();
+  map['MatKhauCu'] = oldPass;
+  map['MatKhauMoi'] = newPass;
+  final response = await http.post(
+    Uri.parse('${Dimens.API_URL}NguoiDung/DoiMatKhau'),
+    headers: <String, String>{
+      'Authorization': 'Bearer $token',
+    },
+    body: map,
+  );
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body)['success'];
+  } else {
+    return false;
+  }
+}
