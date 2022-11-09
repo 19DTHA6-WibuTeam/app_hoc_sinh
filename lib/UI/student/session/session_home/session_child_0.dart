@@ -1,6 +1,7 @@
 import 'package:doan_chuyen_nganh/UI/student/session/session_detail/session_child_01_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
+import 'package:doan_chuyen_nganh/main.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/session.dart';
 import 'package:doan_chuyen_nganh/models/time&subject.dart';
@@ -46,8 +47,10 @@ class _SessionChild0State extends State<SessionChild0> {
     List<CaHoc>? sessionTimeListAPI = await getSessionTimeList();
     for (int i = 0; i < sessionTimeListAPI!.length; i++) {
       String startTime = sessionTimeListAPI[i].gioBatDau.toString();
+      var startSub = startTime.substring(0, 5);
       String endTime = sessionTimeListAPI[i].gioKetThuc.toString();
-      sessionTimeList.add('$startTime-$endTime');
+      var endSub = endTime.substring(0, 5);
+      sessionTimeList.add('$startSub-$endSub');
     }
     setState(() {
       isLoaded = true;
@@ -216,7 +219,7 @@ class _SessionChild0State extends State<SessionChild0> {
                                         width: 5,
                                       ),
                                       Text(
-                                        "${sessionList[i].soTien} VNĐ",
+                                        "${numberWithDot(sessionList[i].soTien.toString())} VNĐ",
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),
                                       )

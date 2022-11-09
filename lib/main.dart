@@ -44,3 +44,7 @@ class _AppState extends State<App> {
     );
   }
 }
+
+String numberWithDot(String x) {
+  return x.toString().replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), '.');
+}

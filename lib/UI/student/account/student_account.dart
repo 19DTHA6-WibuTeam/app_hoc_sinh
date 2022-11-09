@@ -34,6 +34,7 @@ class _StudentAccountState extends State<StudentAccount> {
     });
   }
 
+  var isLoaded = false;
   Future<void> _getData() async {
     var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token'));
@@ -46,7 +47,9 @@ class _StudentAccountState extends State<StudentAccount> {
       isFeMale.value = false;
     }
     avatar.value = user?.avatar ?? '';
-    setState(() {});
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   RxInt gender = 0.obs;
@@ -68,263 +71,278 @@ class _StudentAccountState extends State<StudentAccount> {
     return Scaffold(
       body: SafeArea(
         child: (SingleChildScrollView(
-          child: Column(
-            children: [
-              Obx(
-                () => Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      icon: enabled.value
-                          ? const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                            )
-                          : const Icon(
-                              Icons.edit,
-                              color: AppColors.dark,
-                            ),
-                      onPressed: () {
-                        enabled.value = !enabled.value;
-                      },
-                    ),
-                  ],
-                ),
+          child: Visibility(
+            visible: isLoaded,
+            replacement: SizedBox(
+              width: maxWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: maxHeight * 0.3),
+                  const CircularProgressIndicator(),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.PADDING_20,
-                    right: Dimens.PADDING_20,
-                    bottom: Dimens.PADDING_20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    avatar.value != ''
-                        ? SizedBox(
-                            height: Dimens.HEIGHT_200,
-                            width: Dimens.WIDTH_200,
-                            child: RoundAvatar(
-                              imagePath: avatar.value,
-                              leftPadding: Dimens.PADDING_20,
-                              topPadding: Dimens.PADDING_20,
-                              rightPadding: Dimens.PADDING_20,
-                              bottomPadding: Dimens.PADDING_20,
-                              radius: Dimens.RADIUS_30,
-                              initAvatar: true,
+            ),
+            child: Column(
+              children: [
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        icon: enabled.value
+                            ? const Icon(
+                                Icons.edit,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                Icons.edit,
+                                color: AppColors.dark,
+                              ),
+                        onPressed: () {
+                          enabled.value = !enabled.value;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: Dimens.PADDING_20,
+                      right: Dimens.PADDING_20,
+                      bottom: Dimens.PADDING_20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      avatar.value != ''
+                          ? SizedBox(
+                              height: Dimens.HEIGHT_200,
+                              width: Dimens.WIDTH_200,
+                              child: RoundAvatar(
+                                imagePath: avatar.value,
+                                leftPadding: Dimens.PADDING_20,
+                                topPadding: Dimens.PADDING_20,
+                                rightPadding: Dimens.PADDING_20,
+                                bottomPadding: Dimens.PADDING_20,
+                                radius: Dimens.RADIUS_30,
+                                initAvatar: true,
+                              ),
+                            )
+                          : SizedBox(
+                              height: Dimens.HEIGHT_200,
+                              width: Dimens.WIDTH_200,
+                              child: RoundAvatar(
+                                imagePath: Images.imageDefault,
+                                leftPadding: Dimens.PADDING_20,
+                                topPadding: Dimens.PADDING_20,
+                                rightPadding: Dimens.PADDING_20,
+                                bottomPadding: Dimens.PADDING_20,
+                                radius: Dimens.RADIUS_30,
+                                initAvatar: false,
+                              ),
                             ),
-                          )
-                        : SizedBox(
-                            height: Dimens.HEIGHT_200,
-                            width: Dimens.WIDTH_200,
-                            child: RoundAvatar(
-                              imagePath: Images.imageDefault1,
-                              leftPadding: Dimens.PADDING_20,
-                              topPadding: Dimens.PADDING_20,
-                              rightPadding: Dimens.PADDING_20,
-                              bottomPadding: Dimens.PADDING_20,
-                              radius: Dimens.RADIUS_30,
-                              initAvatar: false,
-                            ),
-                          ),
-                    Obx(
-                      () => AppTextField(
-                        labelText: Dimens.Phone,
-                        enabled: enabled.value,
-                        obscureText: false,
-                        controllerName: _phoneNumberController,
-                      ),
-                    ),
-                    SizedBox(height: maxHeight * 0.02),
-                    Obx(
-                      () => AppTextField(
-                        labelText: Dimens.Name,
-                        enabled: enabled.value,
-                        obscureText: false,
-                        controllerName: _fullNameController,
-                      ),
-                    ),
-                    SizedBox(height: maxHeight * 0.02),
-                    Obx(
-                      () => AppTextField(
-                        labelText: Dimens.address,
-                        enabled: enabled.value,
-                        obscureText: false,
-                        controllerName: _addressController,
-                      ),
-                    ),
-                    SizedBox(height: maxHeight * 0.01),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          Dimens.birthday,
-                          style: AppTextStyle.titleSmall.copyWith(fontSize: 13),
+                      Obx(
+                        () => AppTextField(
+                          labelText: Dimens.Phone,
+                          enabled: enabled.value,
+                          obscureText: false,
+                          controllerName: _phoneNumberController,
                         ),
-                        Text(
-                          Dimens.gender,
-                          style: AppTextStyle.titleSmall.copyWith(fontSize: 13),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: maxHeight * 0.01),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          height: Dimens.HEIGHT_55,
-                          width: maxWidth * 0.5,
-                          padding: EdgeInsets.only(
-                              top: maxHeight * 0.005,
-                              bottom: maxHeight * 0.005),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.lightgray,
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.RADIUS_10),
-                            ),
-                            child: Obx(
-                              () => OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(
-                                        color: AppColors.transparent)),
-                                onPressed: enabled.value
-                                    ? () {
-                                        DatePicker.showDatePicker(context,
-                                            showTitleActions: true,
-                                            minTime: DateTime.now().subtract(
-                                                const Duration(days: 365000)),
-                                            maxTime: DateTime.now(),
-                                            onConfirm: (date) {
-                                          pickedDate.value = date;
-                                        },
-                                            currentTime: DateTime.now(),
-                                            locale: LocaleType.vi);
-                                      }
-                                    : null,
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Center(
-                                    child: Text(
-                                      DateFormat('dd/MM/yyyy')
-                                          .format(pickedDate.value),
-                                      style: enabled.value
-                                          ? AppTextStyle.style(
-                                              fontSize: 22,
-                                              color:
-                                                  Colors.black.withOpacity(0.8),
-                                            )
-                                          : AppTextStyle.titleSmall
-                                              .copyWith(fontSize: 22),
+                      ),
+                      SizedBox(height: maxHeight * 0.02),
+                      Obx(
+                        () => AppTextField(
+                          labelText: Dimens.Name,
+                          enabled: enabled.value,
+                          obscureText: false,
+                          controllerName: _fullNameController,
+                        ),
+                      ),
+                      SizedBox(height: maxHeight * 0.02),
+                      Obx(
+                        () => AppTextField(
+                          labelText: Dimens.address,
+                          enabled: enabled.value,
+                          obscureText: false,
+                          controllerName: _addressController,
+                        ),
+                      ),
+                      SizedBox(height: maxHeight * 0.01),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            Dimens.birthday,
+                            style:
+                                AppTextStyle.titleSmall.copyWith(fontSize: 13),
+                          ),
+                          Text(
+                            Dimens.gender,
+                            style:
+                                AppTextStyle.titleSmall.copyWith(fontSize: 13),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: maxHeight * 0.01),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            height: Dimens.HEIGHT_55,
+                            width: maxWidth * 0.5,
+                            padding: EdgeInsets.only(
+                                top: maxHeight * 0.005,
+                                bottom: maxHeight * 0.005),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.lightgray,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.RADIUS_10),
+                              ),
+                              child: Obx(
+                                () => OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                          color: AppColors.transparent)),
+                                  onPressed: enabled.value
+                                      ? () {
+                                          DatePicker.showDatePicker(context,
+                                              showTitleActions: true,
+                                              minTime: DateTime.now().subtract(
+                                                  const Duration(days: 365000)),
+                                              maxTime: DateTime.now(),
+                                              onConfirm: (date) {
+                                            pickedDate.value = date;
+                                          },
+                                              currentTime: DateTime.now(),
+                                              locale: LocaleType.vi);
+                                        }
+                                      : null,
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Center(
+                                      child: Text(
+                                        DateFormat('dd/MM/yyyy')
+                                            .format(pickedDate.value),
+                                        style: enabled.value
+                                            ? AppTextStyle.style(
+                                                fontSize: 22,
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                              )
+                                            : AppTextStyle.titleSmall
+                                                .copyWith(fontSize: 22),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: maxWidth * 0.35,
+                          SizedBox(
+                            width: maxWidth * 0.35,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.lightgray,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.RADIUS_10),
+                              ),
+                              child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: Dimens.PADDING_20),
+                                  child: Obx(
+                                    () => DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        isExpanded: true,
+                                        hint: Text(
+                                          isFeMale.value
+                                              ? genderList[0]
+                                              : genderList[1],
+                                          style: enabled.value
+                                              ? AppTextStyle.style(
+                                                  color: Colors.black
+                                                      .withOpacity(0.8),
+                                                )
+                                              : AppTextStyle.titleSmall,
+                                        ),
+                                        value: dropdownValue,
+                                        elevation: 16,
+                                        onChanged: enabled.value
+                                            ? (String? newValue) {
+                                                setState(() {
+                                                  dropdownValue = newValue!;
+                                                  print(dropdownValue);
+                                                });
+                                              }
+                                            : null,
+                                        items: genderList
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: enabled.value
+                                                  ? AppTextStyle.style(
+                                                      color: Colors.black
+                                                          .withOpacity(0.8),
+                                                    )
+                                                  : AppTextStyle.titleSmall,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: maxHeight * 0.02),
+                      GestureDetector(
+                          onTap: () {
+                            Get.to(const ChangePassPage());
+                          },
                           child: Container(
+                            padding: const EdgeInsets.all(Dimens.PADDING_20),
                             decoration: BoxDecoration(
-                              color: AppColors.lightgray,
                               borderRadius:
                                   BorderRadius.circular(Dimens.RADIUS_10),
+                              color: AppColors.primary,
                             ),
-                            child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: Dimens.PADDING_20),
-                                child: Obx(
-                                  () => DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Text(
-                                        isFeMale.value
-                                            ? genderList[0]
-                                            : genderList[1],
-                                        style: enabled.value
-                                            ? AppTextStyle.style(
-                                                color: Colors.black
-                                                    .withOpacity(0.8),
-                                              )
-                                            : AppTextStyle.titleSmall,
-                                      ),
-                                      value: dropdownValue,
-                                      elevation: 16,
-                                      onChanged: enabled.value
-                                          ? (String? newValue) {
-                                              setState(() {
-                                                dropdownValue = newValue!;
-                                                print(dropdownValue);
-                                              });
-                                            }
-                                          : null,
-                                      items: genderList
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: enabled.value
-                                                ? AppTextStyle.style(
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
-                                                  )
-                                                : AppTextStyle.titleSmall,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                )),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: maxHeight * 0.02),
-                    GestureDetector(
-                        onTap: () {
-                          Get.to(const ChangePassPage());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(Dimens.PADDING_20),
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimens.RADIUS_10),
-                            color: AppColors.primary,
-                          ),
-                          child: const Center(
-                              child: Text(
-                            Dimens.changePass,
-                            style: AppTextStyle.changePassText,
+                            child: const Center(
+                                child: Text(
+                              Dimens.changePass,
+                              style: AppTextStyle.changePassText,
+                            )),
                           )),
-                        )),
-                    SizedBox(height: maxHeight * 0.02),
-                    GestureDetector(
-                        onTap: () {
-                          _showDialog(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(Dimens.PADDING_20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor),
-                            borderRadius:
-                                BorderRadius.circular(Dimens.RADIUS_10),
-                            color: AppColors.white,
-                          ),
-                          child: const Center(
-                              child: Text(
-                            Dimens.signOut,
-                            style: AppTextStyle.signOutText,
+                      SizedBox(height: maxHeight * 0.02),
+                      GestureDetector(
+                          onTap: () {
+                            _showDialog(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(Dimens.PADDING_20),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.RADIUS_10),
+                              color: AppColors.white,
+                            ),
+                            child: const Center(
+                                child: Text(
+                              Dimens.signOut,
+                              style: AppTextStyle.signOutText,
+                            )),
                           )),
-                        )),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         )),
       ),

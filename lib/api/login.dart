@@ -21,7 +21,7 @@ Future<User?> fetchLogin(String email, String password) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     final data = jsonDecode(response.body);
-    // print(data);
+
     if (data['success'] == false) return null;
     return User.fromJson(data['data']);
   } else {

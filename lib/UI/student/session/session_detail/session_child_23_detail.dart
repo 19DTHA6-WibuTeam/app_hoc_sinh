@@ -54,8 +54,10 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
     List<CaHoc>? sessionTimeListAPI = await getSessionTimeList();
     for (int i = 0; i < sessionTimeListAPI!.length; i++) {
       String startTime = sessionTimeListAPI[i].gioBatDau.toString();
+      var startSub = startTime.substring(0, 5);
       String endTime = sessionTimeListAPI[i].gioKetThuc.toString();
-      sessionTimeList.add('$startTime-$endTime');
+      var endSub = endTime.substring(0, 5);
+      sessionTimeList.add('$startSub-$endSub');
     }
 
     for (int i = 0; i < sessionList.length; i++) {

@@ -49,8 +49,10 @@ class _SessionChild01DetailState extends State<SessionChild01Detail> {
     List<CaHoc>? sessionTimeListAPI = await getSessionTimeList();
     for (int i = 0; i < sessionTimeListAPI!.length; i++) {
       String startTime = sessionTimeListAPI[i].gioBatDau.toString();
+      var startSub = startTime.substring(0, 5);
       String endTime = sessionTimeListAPI[i].gioKetThuc.toString();
-      sessionTimeList.add('$startTime-$endTime');
+      var endSub = endTime.substring(0, 5);
+      sessionTimeList.add('$startSub-$endSub');
     }
 
     for (int i = 0; i < sessionList.length; i++) {
@@ -200,6 +202,23 @@ class _SessionChild01DetailState extends State<SessionChild01Detail> {
                               ),
                               Text(
                                 subTimeCodeToString[index],
+                                style: AppTextStyle.calenderDetailDarkText,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: maxHeight * 0.01,
+                          ),
+                          Row(
+                            children: [
+                              const Text(Dimens.learningDay,
+                                  style: AppTextStyle.calenderDetailBoldText),
+                              const SizedBox(
+                                width: Dimens.WIDTH_5,
+                              ),
+                              Text(
+                                sessionList[index].thoiKhoaBieuTomTat?.tenThu ??
+                                    "",
                                 style: AppTextStyle.calenderDetailDarkText,
                               )
                             ],

@@ -42,3 +42,25 @@ Future<bool> changePassword(
     return false;
   }
 }
+
+Future<List<User>?> getTutorList(Future<String> _token) async {
+  String token = await _token;
+  final response = await http.get(
+      Uri.parse("${Dimens.API_URL}NguoiDung?LaGiaSu=1"),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+      });
+  print(response.body);
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    if (data['success'] == false) return null;
+    List<User> tutorList = [];
+    for (var item in data['data']) {
+      tutorList.add(User.fromJson(item));
+    }
+
+    return tutorList;
+  } else {
+    throw Exception('Failed to load subject list');
+  }
+}
