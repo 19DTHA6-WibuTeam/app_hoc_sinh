@@ -153,68 +153,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                       ],
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.02),
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Row(
-                        children: const <Widget>[
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.dark,
-                              height: 1.5,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimens.PADDING_10),
-                            child: Text(
-                              Dimens.Or,
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.dark,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: Dimens.HEIGHT_55,
-                      //padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.RADIUS_10),
-                            )),
-                        child: Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(Dimens.PADDING_10),
-                              child: Image.asset(Images.iconGoogle,
-                                  width: Dimens.ICON_SIZE_32),
-                            ),
-                            Center(
-                              child: Text(
-                                Dimens.SignInWithGG,
-                                style: AppTextStyle.style(
-                                    fontSize: Dimens.TEXT_SIZE_18,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () => {},
-                      ),
-                    ),
                   ],
                 ),
               )

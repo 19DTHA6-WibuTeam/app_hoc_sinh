@@ -1,3 +1,4 @@
+import 'package:doan_chuyen_nganh/UI/account/Components/round_avatar.dart';
 import 'package:doan_chuyen_nganh/UI/student_post/student_post.dart';
 import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
@@ -63,66 +64,69 @@ class _StudentHomeState extends State<StudentHome> {
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // avatar != ''
-                  //     ? SizedBox(
-                  //         height: mainWidth * 0.1,
-                  //         width: mainWidth * 0.1,
-                  //         child: RoundAvatar(
-                  //           imagePath: avatar,
-                  //           leftPadding: Dimens.PADDING_20,
-                  //           topPadding: Dimens.PADDING_20,
-                  //           rightPadding: Dimens.PADDING_20,
-                  //           bottomPadding: Dimens.PADDING_20,
-                  //           radius: Dimens.RADIUS_30,
-                  //           initAvatar: true,
-                  //         ),
-                  //       )
-                  //     : SizedBox(
-                  //         height: mainWidth * 0.1,
-                  //         width: mainWidth * 0.1,
-                  //         child: RoundAvatar(
-                  //           imagePath: Images.imageDefault,
-                  //           leftPadding: Dimens.PADDING_20,
-                  //           topPadding: Dimens.PADDING_20,
-                  //           rightPadding: Dimens.PADDING_20,
-                  //           bottomPadding: Dimens.PADDING_20,
-                  //           radius: Dimens.RADIUS_30,
-                  //           initAvatar: false,
-                  //         ),
-                  //       ),
-                  SizedBox(
-                    height: mainHeight * 0.1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          //left: Dimens.PADDING_15,
-                          top: Dimens.PADDING_20,
-                          right: Dimens.PADDING_10,
-                          bottom: Dimens.PADDING_10),
-                      child: Container(
-                        height: mainHeight * 0.06,
-                        width: mainWidth * 0.7,
-                        alignment: Alignment.center,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              Dimens.hello,
-                              style: AppTextStyle.titleLarge
-                                  .copyWith(fontSize: mainWidth * 0.06),
+                  Row(
+                    children: [
+                      avatar != ''
+                          ? SizedBox(
+                              height: mainWidth * 0.24,
+                              width: mainWidth * 0.24,
+                              child: RoundAvatar(
+                                imagePath: avatar,
+                                leftPadding: Dimens.PADDING_10,
+                                topPadding: Dimens.PADDING_20,
+                                rightPadding: Dimens.PADDING_10,
+                                bottomPadding: Dimens.PADDING_20,
+                                radius: Dimens.RADIUS_30,
+                                initAvatar: true,
+                              ),
+                            )
+                          : SizedBox(
+                              height: mainWidth * 0.24,
+                              width: mainWidth * 0.24,
+                              child: RoundAvatar(
+                                imagePath: Images.imageDefault,
+                                leftPadding: Dimens.PADDING_10,
+                                topPadding: Dimens.PADDING_20,
+                                rightPadding: Dimens.PADDING_10,
+                                bottomPadding: Dimens.PADDING_20,
+                                radius: Dimens.RADIUS_30,
+                                initAvatar: false,
+                              ),
                             ),
-                            Text(
-                              name,
-                              style: AppTextStyle.titleSmall
-                                  .copyWith(fontSize: mainWidth * 0.04),
+                      SizedBox(
+                        height: mainHeight * 0.1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              //left: Dimens.PADDING_15,
+                              top: Dimens.PADDING_20,
+                              right: Dimens.PADDING_10,
+                              bottom: Dimens.PADDING_10),
+                          child: Container(
+                            height: mainHeight * 0.06,
+                            alignment: Alignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  Dimens.hello,
+                                  style: AppTextStyle.titleLarge
+                                      .copyWith(fontSize: mainWidth * 0.06),
+                                ),
+                                Text(
+                                  name,
+                                  style: AppTextStyle.titleSmall
+                                      .copyWith(fontSize: mainWidth * 0.04),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                   GestureDetector(
                     onTap: (() {
@@ -130,7 +134,9 @@ class _StudentHomeState extends State<StudentHome> {
                     }),
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          top: Dimens.PADDING_20, bottom: Dimens.PADDING_10),
+                          right: Dimens.PADDING_10,
+                          top: Dimens.PADDING_20,
+                          bottom: Dimens.PADDING_10),
                       child: Container(
                         width: mainWidth * 0.22,
                         height: mainHeight * 0.06,

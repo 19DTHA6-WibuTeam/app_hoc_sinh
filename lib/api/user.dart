@@ -50,7 +50,6 @@ Future<List<User>?> getTutorList(Future<String> _token) async {
       headers: <String, String>{
         'Authorization': 'Bearer $token',
       });
-  print(response.body);
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     if (data['success'] == false) return null;
