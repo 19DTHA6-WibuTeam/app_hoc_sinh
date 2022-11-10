@@ -1,4 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/account/Components/round_avatar.dart';
+import 'package:doan_chuyen_nganh/widget/round_avatar.dart';
 import 'package:doan_chuyen_nganh/UI/student_post/student_post.dart';
 import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
