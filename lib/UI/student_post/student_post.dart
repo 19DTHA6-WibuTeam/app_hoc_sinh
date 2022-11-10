@@ -1,15 +1,12 @@
-import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/UI/app_switch/app_switch.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
-
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
-import 'package:doan_chuyen_nganh/models/session.dart';
 import 'package:doan_chuyen_nganh/models/time&subject.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
-import 'package:doan_chuyen_nganh/widget/custom_dropdown_button.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -247,7 +244,6 @@ class _StudentPostState extends State<StudentPost> {
                     controllerName: _weekController,
                     keyboardType: TextInputType.number,
                   ),
-
                   const Text(
                     Dimens.subject,
                     style: AppTextStyle.titleSmall,
@@ -395,33 +391,6 @@ class _StudentPostState extends State<StudentPost> {
                         );
                       },
                     ),
-                  // SizedBox(
-                  //   height: maxHeight * 0.01,
-                  // ),
-                  // SingleChildScrollView(
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       color: AppColors.lightgray,
-                  //       borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
-                  //     ),
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.only(left: Dimens.PADDING_20),
-                  //       child: TextField(
-                  //         controller: _learPlaceController,
-                  //         scrollPhysics: const NeverScrollableScrollPhysics(),
-                  //         maxLines: null,
-                  //         decoration: const InputDecoration(
-                  //           border: InputBorder.none,
-                  //           labelText: Dimens.learnPlace,
-                  //           labelStyle: AppTextStyle.titleSmall,
-                  //         ),
-                  //         style: AppTextStyle.style(
-                  //           color: Colors.black.withOpacity(0.8),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: maxHeight * 0.01,
                   ),
@@ -494,18 +463,19 @@ class _StudentPostState extends State<StudentPost> {
                               timeCheck.substring(0, timeCheck.length - 1);
 
                           bool? success = await postSession(
-                            BaseSharedPreferences.getString('token'),
-                            subject,
-                            _classController.text,
-                            _nameController.text,
-                            _addressController.text,
-                            _phoneController.text,
-                            _weekController.text,
-                            fee,
-                            time,
-                            timeCheck,
-                            _noteController.text,
-                          );
+                              BaseSharedPreferences.getString('token'),
+                              subject,
+                              _classController.text,
+                              _nameController.text,
+                              _addressController.text,
+                              _phoneController.text,
+                              _weekController.text,
+                              fee,
+                              time,
+                              timeCheck,
+                              //_noteController.text,
+                              'khong co gi');
+
                           dismissDialog() {
                             Get.back();
                           }

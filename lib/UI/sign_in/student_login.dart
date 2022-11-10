@@ -1,5 +1,5 @@
-import 'package:doan_chuyen_nganh/UI/student/app_switch/app_switch.dart';
-import 'package:doan_chuyen_nganh/UI/student/sign_up/sign_up_screen.dart';
+import 'package:doan_chuyen_nganh/UI/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/UI/sign_up/sign_up_screen.dart';
 import 'package:doan_chuyen_nganh/api/login.dart';
 import 'package:doan_chuyen_nganh/models/user.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';

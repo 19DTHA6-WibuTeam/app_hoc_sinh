@@ -1,5 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/student/pay_info/pay_info.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_detail/session_child_01_detail.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_detail/session_child_23_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/main.dart';
@@ -11,19 +10,17 @@ import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class SessionChild1 extends StatefulWidget {
-  const SessionChild1({super.key});
+class SessionChild2 extends StatefulWidget {
+  const SessionChild2({super.key});
 
   @override
-  State<SessionChild1> createState() => _SessionChild1State();
+  State<SessionChild2> createState() => _SessionChild2State();
 }
 
-class _SessionChild1State extends State<SessionChild1> {
+class _SessionChild2State extends State<SessionChild2> {
   @override
   void initState() {
     super.initState();
@@ -55,9 +52,8 @@ class _SessionChild1State extends State<SessionChild1> {
       var endSub = endTime.substring(0, 5);
       sessionTimeList.add('$startSub-$endSub');
     }
-    setState(() {
-      isLoaded = true;
-    });
+    isLoaded = true;
+    setState(() {});
   }
 
   final List<Color> _colorsList = [
@@ -88,7 +84,6 @@ class _SessionChild1State extends State<SessionChild1> {
     for (int i = 0; i < sessionList.length; i++) {
       subTittle.add(_payListDetail[(sessionList[i].tinhTrang!)]);
     }
-
     final double maxHeight = MediaQuery.of(context).size.height;
     final double maxWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -112,11 +107,11 @@ class _SessionChild1State extends State<SessionChild1> {
                 height: maxHeight * 0.01,
               ),
               for (int i = 0; i < sessionList.length; i++)
-                sessionList[i].tinhTrang == 1
+                sessionList[i].tinhTrang == 2
                     ? GestureDetector(
                         onTap: () {
                           Get.to(
-                            SessionChild01Detail(
+                            SessionChild23Detail(
                               sessionId: sessionList[i].maKhoaHoc!,
                             ),
                           );

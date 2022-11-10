@@ -1,4 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/student/session/session_detail/session_child_01_detail.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_detail/session_child_01_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/main.dart';
@@ -13,14 +13,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class SessionChild0 extends StatefulWidget {
-  const SessionChild0({super.key});
+class SessionChild1 extends StatefulWidget {
+  const SessionChild1({super.key});
 
   @override
-  State<SessionChild0> createState() => _SessionChild0State();
+  State<SessionChild1> createState() => _SessionChild1State();
 }
 
-class _SessionChild0State extends State<SessionChild0> {
+class _SessionChild1State extends State<SessionChild1> {
   @override
   void initState() {
     super.initState();
@@ -85,6 +85,7 @@ class _SessionChild0State extends State<SessionChild0> {
     for (int i = 0; i < sessionList.length; i++) {
       subTittle.add(_payListDetail[(sessionList[i].tinhTrang!)]);
     }
+
     final double maxHeight = MediaQuery.of(context).size.height;
     final double maxWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -108,7 +109,7 @@ class _SessionChild0State extends State<SessionChild0> {
                 height: maxHeight * 0.01,
               ),
               for (int i = 0; i < sessionList.length; i++)
-                sessionList[i].tinhTrang == 0
+                sessionList[i].tinhTrang == 1
                     ? GestureDetector(
                         onTap: () {
                           Get.to(
@@ -139,7 +140,7 @@ class _SessionChild0State extends State<SessionChild0> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    sessionList[i].tenMonHoc ?? "",
+                                    sessionList[i].tenMonHoc!,
                                     style: AppTextStyle.chooseText.copyWith(
                                         fontSize: maxWidth * 0.07,
                                         fontWeight: FontWeight.bold,

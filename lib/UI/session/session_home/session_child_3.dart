@@ -1,6 +1,4 @@
-import 'package:doan_chuyen_nganh/UI/student/pay_info/pay_info.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_detail/session_child_01_detail.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_detail/session_child_23_detail.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_detail/session_child_23_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/main.dart';
@@ -15,14 +13,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class SessionChild2 extends StatefulWidget {
-  const SessionChild2({super.key});
+class SessionChild3 extends StatefulWidget {
+  const SessionChild3({super.key});
 
   @override
-  State<SessionChild2> createState() => _SessionChild2State();
+  State<SessionChild3> createState() => _SessionChild3State();
 }
 
-class _SessionChild2State extends State<SessionChild2> {
+class _SessionChild3State extends State<SessionChild3> {
   @override
   void initState() {
     super.initState();
@@ -54,8 +52,9 @@ class _SessionChild2State extends State<SessionChild2> {
       var endSub = endTime.substring(0, 5);
       sessionTimeList.add('$startSub-$endSub');
     }
-    isLoaded = true;
-    setState(() {});
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   final List<Color> _colorsList = [
@@ -109,7 +108,7 @@ class _SessionChild2State extends State<SessionChild2> {
                 height: maxHeight * 0.01,
               ),
               for (int i = 0; i < sessionList.length; i++)
-                sessionList[i].tinhTrang == 2
+                sessionList[i].tinhTrang == 3
                     ? GestureDetector(
                         onTap: () {
                           Get.to(

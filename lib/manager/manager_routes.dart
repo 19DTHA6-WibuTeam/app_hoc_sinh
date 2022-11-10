@@ -1,5 +1,5 @@
-import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
-import 'package:doan_chuyen_nganh/UI/student/splash/splash_screen.dart';
+import 'package:doan_chuyen_nganh/UI/sign_in/student_login.dart';
+import 'package:doan_chuyen_nganh/UI/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class ManagerRoutes {

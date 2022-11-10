@@ -1,5 +1,5 @@
-import 'package:doan_chuyen_nganh/UI/student/student_post/student_post.dart';
-import 'package:doan_chuyen_nganh/UI/student/tutor_detail/tutor_detail.dart';
+import 'package:doan_chuyen_nganh/UI/student_post/student_post.dart';
+import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/user.dart';
@@ -28,17 +28,20 @@ class _StudentHomeState extends State<StudentHome> {
     });
   }
 
+  String name = '';
+  String avatar = '';
   var isLoaded = false;
   List<User> tutorList = [];
   Future<void> _getData() async {
     tutorList = (await getTutorList(BaseSharedPreferences.getString('token')))!;
-
+    var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
+        BaseSharedPreferences.getString('token'));
+    name = user!.user_fullname ?? Dimens.student;
+    avatar = user.avatar ?? '';
     setState(() {
       isLoaded = true;
     });
   }
-
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +63,42 @@ class _StudentHomeState extends State<StudentHome> {
             ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
+                  // avatar != ''
+                  //     ? SizedBox(
+                  //         height: mainWidth * 0.1,
+                  //         width: mainWidth * 0.1,
+                  //         child: RoundAvatar(
+                  //           imagePath: avatar,
+                  //           leftPadding: Dimens.PADDING_20,
+                  //           topPadding: Dimens.PADDING_20,
+                  //           rightPadding: Dimens.PADDING_20,
+                  //           bottomPadding: Dimens.PADDING_20,
+                  //           radius: Dimens.RADIUS_30,
+                  //           initAvatar: true,
+                  //         ),
+                  //       )
+                  //     : SizedBox(
+                  //         height: mainWidth * 0.1,
+                  //         width: mainWidth * 0.1,
+                  //         child: RoundAvatar(
+                  //           imagePath: Images.imageDefault,
+                  //           leftPadding: Dimens.PADDING_20,
+                  //           topPadding: Dimens.PADDING_20,
+                  //           rightPadding: Dimens.PADDING_20,
+                  //           bottomPadding: Dimens.PADDING_20,
+                  //           radius: Dimens.RADIUS_30,
+                  //           initAvatar: false,
+                  //         ),
+                  //       ),
                   SizedBox(
                     height: mainHeight * 0.1,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: Dimens.PADDING_15,
+                          //left: Dimens.PADDING_15,
                           top: Dimens.PADDING_20,
                           right: Dimens.PADDING_10,
                           bottom: Dimens.PADDING_10),
@@ -75,22 +106,20 @@ class _StudentHomeState extends State<StudentHome> {
                         height: mainHeight * 0.06,
                         width: mainWidth * 0.7,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFEFEFF4),
-                          borderRadius: BorderRadius.circular(Dimens.RADIUS_10),
-                        ),
-                        child: TextFormField(
-                          controller: _searchController,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: Color(0xFF8A8A8F),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              Dimens.hello,
+                              style: AppTextStyle.titleLarge
+                                  .copyWith(fontSize: mainWidth * 0.06),
                             ),
-                            hintText: Dimens.search,
-                            hintStyle: Theme.of(context).textTheme.titleMedium,
-                          ),
+                            Text(
+                              name,
+                              style: AppTextStyle.titleSmall
+                                  .copyWith(fontSize: mainWidth * 0.04),
+                            ),
+                          ],
                         ),
                       ),
                     ),

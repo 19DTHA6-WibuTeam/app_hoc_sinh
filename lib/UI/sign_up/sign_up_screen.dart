@@ -1,11 +1,10 @@
-import 'package:doan_chuyen_nganh/UI/student/sign_in/student_login.dart';
+import 'package:doan_chuyen_nganh/UI/sign_in/student_login.dart';
 import 'package:doan_chuyen_nganh/api/register.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_field.dart';
 import 'package:doan_chuyen_nganh/widget/app_text_filed_pass.dart';
-import 'package:doan_chuyen_nganh/widget/custom_dropdown_button.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -221,13 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       }).toList(),
                                     ),
                                   )),
-                            )
-                            // child: CustomDropdownButton(
-                            //   itemsList: genderList,
-                            //   hintText: "Giới tính",
-                            //   enabled: true,
-                            // ),
-                            ),
+                            )),
                       ],
                     ),
                     SizedBox(height: maxHeight * 0.01),

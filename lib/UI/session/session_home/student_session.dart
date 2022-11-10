@@ -1,7 +1,7 @@
-import 'package:doan_chuyen_nganh/UI/student/session/session_home/session_child_0.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_home/session_child_1.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_home/session_child_2.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_home/session_child_3.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_home/session_child_0.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_home/session_child_1.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_home/session_child_2.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_home/session_child_3.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:flutter/material.dart';
 

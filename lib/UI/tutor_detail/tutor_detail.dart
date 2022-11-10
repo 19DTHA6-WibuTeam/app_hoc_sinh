@@ -1,5 +1,5 @@
-import 'package:doan_chuyen_nganh/UI/student/tutor_detail/components/custom_dropdown_row.dart';
-import 'package:doan_chuyen_nganh/UI/student/tutor_detail/components/custom_row.dart';
+import 'package:doan_chuyen_nganh/UI/tutor_detail/components/custom_dropdown_row.dart';
+import 'package:doan_chuyen_nganh/UI/tutor_detail/components/custom_row.dart';
 import 'package:doan_chuyen_nganh/api/user.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/user.dart';
@@ -8,10 +8,8 @@ import 'package:doan_chuyen_nganh/theme/dimens.dart';
 import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class TutorDetail extends StatefulWidget {
   int tutorId;

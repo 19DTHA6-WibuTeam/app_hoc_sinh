@@ -71,6 +71,7 @@ class Dimens {
 
   //TEXT
   static const Welcome = "WELCOME";
+  static const hello = "Xin Chào!";
   static const SignInContinue = "Đăng nhập để tiếp tục";
   static const SignUpContinue = "Đăng ký để tham gia";
   static const Email = "Email";

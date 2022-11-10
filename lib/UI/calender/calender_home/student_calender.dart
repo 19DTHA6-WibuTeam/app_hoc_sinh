@@ -1,20 +1,13 @@
-import 'package:doan_chuyen_nganh/UI/student/calender/calender_detail/calender_detail.dart';
+import 'package:doan_chuyen_nganh/UI/calender/calender_detail/calender_detail.dart';
 import 'package:doan_chuyen_nganh/api/calender.dart';
-import 'package:doan_chuyen_nganh/api/subject.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/calender.dart';
-import 'package:doan_chuyen_nganh/models/time&subject.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:doan_chuyen_nganh/theme/dimens.dart';
-import 'package:doan_chuyen_nganh/theme/images.dart';
 import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 

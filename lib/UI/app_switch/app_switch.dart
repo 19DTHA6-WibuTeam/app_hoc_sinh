@@ -1,11 +1,9 @@
-import 'package:doan_chuyen_nganh/UI/student/account/student_account.dart';
-import 'package:doan_chuyen_nganh/UI/student/calender/calender_home/student_calender.dart';
-import 'package:doan_chuyen_nganh/UI/student/home/student_home.dart';
-import 'package:doan_chuyen_nganh/UI/student/session/session_home/student_session.dart';
-import 'package:doan_chuyen_nganh/UI/student/student_post/student_post.dart';
+import 'package:doan_chuyen_nganh/UI/account/student_account.dart';
+import 'package:doan_chuyen_nganh/UI/calender/calender_home/student_calender.dart';
+import 'package:doan_chuyen_nganh/UI/home_page/student_home.dart';
+import 'package:doan_chuyen_nganh/UI/session/session_home/student_session.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class Student extends StatefulWidget {
