@@ -28,6 +28,24 @@ Future<List<Datum>?> getSessionList(
   }
 }
 
+Future<Datum?> getSession(sessionId, Future<String> _token) async {
+  String token = await _token;
+  final response = await http.get(
+      Uri.parse("${Dimens.API_URL}KhoaHoc/$sessionId"),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+      });
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    if (data['success'] == false) return null;
+
+    return Datum.fromJson(data['data']);
+  } else {
+    throw Exception('Failed to load subject list');
+  }
+}
+
 Future<bool> deleteSession(Future<String> _token, int sessionId) async {
   String token = await _token;
   final response = await http.delete(
@@ -66,6 +84,7 @@ Future<bool> postSession(
   map['MaCaHoc'] = maCahoc;
   map['MaThu'] = maThu;
   map['GhiChu'] = ghiChu;
+  print(map);
   final response = await http.post(
     Uri.parse("${Dimens.API_URL}KhoaHoc"),
     headers: <String, String>{
@@ -73,6 +92,7 @@ Future<bool> postSession(
     },
     body: map,
   );
+  print(response.body);
   if (response.statusCode == 200)
     return jsonDecode(response.body)['success'];
   else

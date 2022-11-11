@@ -426,98 +426,25 @@ class _StudentPostState extends State<StudentPost> {
                     child: SizedBox(
                       height: maxHeight * 0.07,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.RADIUS_10),
-                            )),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(Dimens.post,
-                                style: AppTextStyle.changePassText.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                          ],
-                        ),
-                        onPressed: () async {
-                          String subject = subjectValue.value;
-                          subject = subject[0];
-
-                          String fee = feeValue.value;
-                          fee = fee.substring(0, fee.length - 4);
-
-                          String time = sessionTimeValue.value;
-                          time = time[0];
-
-                          String timeCheck = "";
-                          for (int i = 0; i < timeCheckList.length; i++) {
-                            if (timeCheckList[i].value == true) {
-                              String add = (i + 1).toString();
-                              timeCheck += '$add,';
-                            }
-                          }
-                          timeCheck =
-                              timeCheck.substring(0, timeCheck.length - 1);
-
-                          bool? success = await postSession(
-                              BaseSharedPreferences.getString('token'),
-                              subject,
-                              _classController.text,
-                              _nameController.text,
-                              _addressController.text,
-                              _phoneController.text,
-                              _weekController.text,
-                              fee,
-                              time,
-                              timeCheck,
-                              //_noteController.text,
-                              'khong co gi');
-
-                          dismissDialog() {
-                            Get.back();
-                          }
-
-                          if (success == true) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                        title: const Text(
-                                          Dimens.postDone,
-                                          style: TextStyle(
-                                              fontSize: Dimens.TEXT_SIZE_14),
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              dismissDialog();
-                                              Get.offAll(const Student());
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ]));
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                        title: const Text(
-                                          Dimens.postWrong,
-                                          style: TextStyle(
-                                              fontSize: Dimens.TEXT_SIZE_14),
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              dismissDialog();
-                                            },
-                                            child: const Text('Đóng'),
-                                          ),
-                                        ]));
-                          }
-                        },
-                      ),
+                          style: ElevatedButton.styleFrom(
+                              primary: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.RADIUS_10),
+                              )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(Dimens.post,
+                                  style: AppTextStyle.changePassText.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            ],
+                          ),
+                          onPressed: () async {
+                            _postHandler();
+                          }),
                     ),
                   )
                 ],
@@ -527,5 +454,101 @@ class _StudentPostState extends State<StudentPost> {
         ),
       )),
     );
+  }
+
+  Future<void> _postHandler() async {
+    String subject = subjectValue.value;
+    subject = subject[0];
+
+    String fee = feeValue.value;
+    fee = fee.substring(0, fee.length - 4);
+
+    String time = sessionTimeValue.value;
+    time = time[0];
+
+    String timeCheck = "";
+    for (int i = 0; i < timeCheckList.length; i++) {
+      if (timeCheckList[i].value == true) {
+        String add = (i + 1).toString();
+        timeCheck += '$add,';
+      }
+    }
+    if (timeCheck == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Bạn phải chọn ngày học!")));
+    } else {
+      timeCheck = timeCheck.substring(0, timeCheck.length - 1);
+    }
+
+    if (int.parse(_classController.text) > 12 ||
+        int.parse(_classController.text) <= 0) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Lớp phải thuộc 1-12")));
+    } else if (int.parse(_weekController.text) < 4) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Số tuần học phải >= 4")));
+    } else if (fee[0] == 'G') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Bạn phải chọn học phí!")));
+    } else if (time == "K") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Bạn phải chọn thời gian học!")));
+    } else if (subject == "C") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Bạn phải chọn môn học!")));
+    } else {
+      bool? success = await postSession(
+        BaseSharedPreferences.getString('token'),
+        subject,
+        _classController.text,
+        _nameController.text,
+        _addressController.text,
+        _phoneController.text,
+        _weekController.text,
+        fee,
+        time,
+        timeCheck,
+        _noteController.text,
+      );
+
+      dismissDialog() {
+        Get.back();
+      }
+
+      if (success == true) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      Dimens.postDone,
+                      style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          dismissDialog();
+                          Get.offAll(Student());
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ]));
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      Dimens.postWrong,
+                      style: TextStyle(fontSize: Dimens.TEXT_SIZE_14),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          dismissDialog();
+                        },
+                        child: const Text('Đóng'),
+                      ),
+                    ]));
+      }
+    }
   }
 }

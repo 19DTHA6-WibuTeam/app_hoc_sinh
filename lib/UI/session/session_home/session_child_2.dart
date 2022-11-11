@@ -113,6 +113,7 @@ class _SessionChild2State extends State<SessionChild2> {
                           Get.to(
                             SessionChild23Detail(
                               sessionId: sessionList[i].maKhoaHoc!,
+                              tutorId: sessionList[i].maGiaSu!,
                             ),
                           );
                         },
@@ -179,27 +180,6 @@ class _SessionChild2State extends State<SessionChild2> {
                                       ),
                                       Text(
                                         subTimeCodeToString[i],
-                                        style: AppTextStyle.chooseText.copyWith(
-                                            fontSize: maxWidth * 0.05),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Gia sư: ",
-                                        style: AppTextStyle.chooseText.copyWith(
-                                            fontSize: maxWidth * 0.05),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        sessionList[i].maGiaSu != null
-                                            ? sessionList[i].maGiaSu.toString()
-                                            : "Đang chờ",
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),
                                       )

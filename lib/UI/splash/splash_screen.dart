@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   route() async {
     final userToken = await BaseSharedPreferences.getString('token');
     if (userToken.length > 0) {
-      Get.to(const Student());
+      Get.to(Student());
     } else {
       Get.to(const StudentLoginScreen());
     }

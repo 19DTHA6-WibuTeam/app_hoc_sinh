@@ -28,6 +28,6 @@ class Images {
   static const String imageIntro4 = '$imagePath/image_intro_4.png';
   static const String imageSplash = '$imagePath/splash.png';
 
-  static const String imageMinh = '$imagePath/minh.jpg';
+  static const String imageMinh = '$imagePath/payment.png';
   static const String imageDefault = '$imagePath/default-avatar.jpg';
 }

@@ -123,7 +123,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                             if (user != null) {
                               saveLogin(user);
                               print(user.user_email);
-                              Get.offAll(const Student());
+                              Get.offAll(Student());
                             } else
                               print("something wrong");
                           }),

@@ -1,4 +1,7 @@
+import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/api/calender.dart';
+import 'package:doan_chuyen_nganh/api/session.dart';
+import 'package:doan_chuyen_nganh/api/user.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/calender.dart';
 import 'package:doan_chuyen_nganh/theme/colors.dart';
@@ -35,12 +38,22 @@ class _CalenderDetailState extends State<CalenderDetail> {
 
   List<CalenderData> calenderList = [];
   int index = 0;
-
+  String tutorName = '';
+  int tutorId = 0;
   var isLoaded = false;
   Future<void> _getData() async {
     calenderList = (await getCalender(
         BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token')))!;
+
+    var sessionById = await getSession(
+        widget.sessionId.toString(), BaseSharedPreferences.getString('token'));
+
+    var tutor = await getTutor(sessionById?.maGiaSu.toString(),
+        await BaseSharedPreferences.getString('token'));
+
+    tutorName = tutor?.user_fullname ?? '';
+    tutorId = tutor?.user_id ?? 0;
     for (int i = 0; i < calenderList.length; i++) {
       if (calenderList[i].maKhoaHoc == widget.sessionId &&
           calenderList[i].maThu == widget.dayId) {
@@ -174,15 +187,23 @@ class _CalenderDetailState extends State<CalenderDetail> {
                       height: maxHeight * 0.01,
                     ),
                     Row(
-                      children: const [
-                        Text(Dimens.tutor,
+                      children: [
+                        const Text(Dimens.tutor,
                             style: AppTextStyle.calenderDetailBoldText),
-                        SizedBox(
+                        const SizedBox(
                           width: Dimens.WIDTH_5,
                         ),
-                        Text(
-                          "Nguyễn Văn A",
-                          style: AppTextStyle.calenderDetailBoldText,
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(TutorDetail(
+                              tutorId: tutorId,
+                            ));
+                          },
+                          child: Text(
+                            tutorName,
+                            style: AppTextStyle.calenderDetailBoldText
+                                .copyWith(color: AppColors.primary),
+                          ),
                         )
                       ],
                     ),

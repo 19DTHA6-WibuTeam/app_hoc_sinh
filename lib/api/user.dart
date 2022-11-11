@@ -22,6 +22,24 @@ Future<User?> getUser(Future<String> _userId, Future<String> _token) async {
     return null;
 }
 
+Future<User?> getTutor(_userId, _token) async {
+  String userId = _userId;
+  String token = _token;
+
+  final response = await http.get(
+      Uri.parse('${Dimens.API_URL}NguoiDung/$userId'),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+      });
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    if (data['success'] == false) return null;
+    return User.fromJson(data['data']);
+  } else
+    return null;
+}
+
 Future<bool> changePassword(
     Future<String> _token, String oldPass, String newPass) async {
   String token = await _token;

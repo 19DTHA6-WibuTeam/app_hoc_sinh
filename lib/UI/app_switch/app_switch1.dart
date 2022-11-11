@@ -6,17 +6,17 @@ import 'package:doan_chuyen_nganh/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Student extends StatefulWidget {
-  Student({
+class Student1 extends StatefulWidget {
+  Student1({
     Key? key,
   }) : super(key: key);
 
   @override
-  _StudentState createState() => _StudentState();
+  _Student1State createState() => _Student1State();
 }
 
-class _StudentState extends State<Student> {
-  int _bottomNavIndex = 0;
+class _Student1State extends State<Student1> {
+  int _bottomNavIndex = 2;
 
   final List<Widget> _widgetOptions = const <Widget>[
     StudentHome(),

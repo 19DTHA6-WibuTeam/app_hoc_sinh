@@ -103,6 +103,7 @@ class Dimens {
   static const chooseClass = "Chọn lớp";
   static const classRoom = "Lớp:";
   static const subject = "Môn học:";
+  static const sessionId = "Mã khóa học: ";
   static const chooseSubject = "Chọn môn học";
   static const findTutor = "Đăng bài tìm gia sư";
   static const pleasFillAll = "(*)Vui lòng điền đầy đủ các thông tin";
@@ -131,5 +132,5 @@ class Dimens {
   static const week = "Số tuần học ";
   static const deleteSession = "Hủy đăng ký";
   static const postDone = "Đăng bài thành công!";
-  static const postWrong = "Lỗi roài!";
+  static const postWrong = "Trùng lịch học rồi!";
 }

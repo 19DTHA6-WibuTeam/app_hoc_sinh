@@ -1,6 +1,7 @@
 import 'package:doan_chuyen_nganh/UI/session/session_detail/session_child_01_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
+import 'package:doan_chuyen_nganh/api/user.dart';
 import 'package:doan_chuyen_nganh/main.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/session.dart';
@@ -180,27 +181,6 @@ class _SessionChild0State extends State<SessionChild0> {
                                       ),
                                       Text(
                                         subTimeCodeToString[i],
-                                        style: AppTextStyle.chooseText.copyWith(
-                                            fontSize: maxWidth * 0.05),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Gia sư: ",
-                                        style: AppTextStyle.chooseText.copyWith(
-                                            fontSize: maxWidth * 0.05),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        sessionList[i].maGiaSu != null
-                                            ? sessionList[i].maGiaSu.toString()
-                                            : "Đang chờ",
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),
                                       )

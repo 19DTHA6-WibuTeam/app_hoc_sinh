@@ -1,5 +1,9 @@
+import 'package:doan_chuyen_nganh/UI/app_switch/app_switch.dart';
+import 'package:doan_chuyen_nganh/UI/app_switch/app_switch1.dart';
+import 'package:doan_chuyen_nganh/UI/pay_info/pay_info.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
+import 'package:doan_chuyen_nganh/main.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/session.dart';
 import 'package:doan_chuyen_nganh/models/time&subject.dart';
@@ -119,6 +123,22 @@ class _SessionChild01DetailState extends State<SessionChild01Detail> {
                                 )
                               ],
                             ),
+                          ),
+                          SizedBox(
+                            height: maxHeight * 0.01,
+                          ),
+                          Row(
+                            children: [
+                              const Text(Dimens.sessionId,
+                                  style: AppTextStyle.calenderDetailBoldText),
+                              const SizedBox(
+                                width: Dimens.WIDTH_5,
+                              ),
+                              Text(
+                                "#${sessionList[index].maKhoaHoc.toString()}",
+                                style: AppTextStyle.calenderDetailDarkText,
+                              )
+                            ],
                           ),
                           SizedBox(
                             height: maxHeight * 0.01,
@@ -262,9 +282,24 @@ class _SessionChild01DetailState extends State<SessionChild01Detail> {
                                 width: Dimens.WIDTH_5,
                               ),
                               Text(
-                                "${sessionList[index].soTien.toString()} VNĐ",
+                                "${numberWithDot(sessionList[index].soTien.toString())} VNĐ",
                                 style: AppTextStyle.calenderDetailBoldText,
-                              )
+                              ),
+                              const SizedBox(
+                                width: Dimens.WIDTH_10,
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (newContext) {
+                                          return const PayInfoScreen();
+                                        });
+                                  },
+                                  icon: const Icon(
+                                    Icons.info_outlined,
+                                    color: AppColors.redPink,
+                                  ))
                             ],
                           ),
                           SizedBox(
@@ -326,7 +361,7 @@ class _SessionChild01DetailState extends State<SessionChild01Detail> {
                                                   'token'),
                                               widget.sessionId);
                                           _dismissDialog();
-                                          _dismissDialog();
+                                          Get.offAll(Student1());
                                         },
                                         child: Text('Có'),
                                       ),

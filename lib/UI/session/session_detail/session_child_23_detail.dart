@@ -1,5 +1,9 @@
+import 'package:doan_chuyen_nganh/UI/pay_info/pay_info.dart';
+import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
 import 'package:doan_chuyen_nganh/api/session.dart';
 import 'package:doan_chuyen_nganh/api/subject.dart';
+import 'package:doan_chuyen_nganh/api/user.dart';
+import 'package:doan_chuyen_nganh/main.dart';
 import 'package:doan_chuyen_nganh/manager/shared_preferences.dart';
 import 'package:doan_chuyen_nganh/models/session.dart';
 import 'package:doan_chuyen_nganh/models/time&subject.dart';
@@ -15,7 +19,9 @@ import 'package:intl/intl.dart';
 
 class SessionChild23Detail extends StatefulWidget {
   int sessionId;
-  SessionChild23Detail({super.key, required this.sessionId});
+  int tutorId;
+  SessionChild23Detail(
+      {super.key, required this.sessionId, required this.tutorId});
 
   @override
   State<SessionChild23Detail> createState() => _SessionChild23DetailState();
@@ -40,11 +46,16 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
 
   var isLoaded = false;
 
+  String tutorName = '';
+
   Future<void> _getData() async {
     sessionList = (await getSessionList(
         BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token')))!;
 
+    var tutor = await getTutor(widget.tutorId.toString(),
+        await BaseSharedPreferences.getString('token'));
+    tutorName = tutor?.user_fullname ?? '';
     List<MonHoc>? subjectListAPI = await getSubjectList();
     for (int i = 0; i < subjectListAPI!.length; i++) {
       String subjectName = subjectListAPI[i].tenMonHoc.toString();
@@ -125,6 +136,22 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
                                 )
                               ],
                             ),
+                          ),
+                          SizedBox(
+                            height: maxHeight * 0.01,
+                          ),
+                          Row(
+                            children: [
+                              const Text(Dimens.sessionId,
+                                  style: AppTextStyle.calenderDetailBoldText),
+                              const SizedBox(
+                                width: Dimens.WIDTH_5,
+                              ),
+                              Text(
+                                "#${sessionList[index].maKhoaHoc.toString()}",
+                                style: AppTextStyle.calenderDetailDarkText,
+                              )
+                            ],
                           ),
                           SizedBox(
                             height: maxHeight * 0.01,
@@ -247,11 +274,17 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
                               const SizedBox(
                                 width: Dimens.WIDTH_5,
                               ),
-                              Text(
-                                sessionList[index].maGiaSu != null
-                                    ? sessionList[index].maGiaSu.toString()
-                                    : "Đang chờ",
-                                style: AppTextStyle.calenderDetailDarkText,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(TutorDetail(
+                                    tutorId: sessionList[index].maGiaSu!,
+                                  ));
+                                },
+                                child: Text(
+                                  tutorName,
+                                  style: AppTextStyle.calenderDetailDarkText
+                                      .copyWith(color: AppColors.primary),
+                                ),
                               )
                             ],
                           ),
@@ -266,9 +299,24 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
                                 width: Dimens.WIDTH_5,
                               ),
                               Text(
-                                "${sessionList[index].soTien.toString()} VNĐ",
+                                "${numberWithDot(sessionList[index].soTien.toString())} VNĐ",
                                 style: AppTextStyle.calenderDetailBoldText,
-                              )
+                              ),
+                              const SizedBox(
+                                width: Dimens.WIDTH_10,
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (newContext) {
+                                          return const PayInfoScreen();
+                                        });
+                                  },
+                                  icon: const Icon(
+                                    Icons.info_outlined,
+                                    color: AppColors.redPink,
+                                  ))
                             ],
                           ),
                           SizedBox(

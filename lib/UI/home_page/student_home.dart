@@ -98,7 +98,6 @@ class _StudentHomeState extends State<StudentHome> {
                               ),
                             ),
                       SizedBox(
-                        height: mainHeight * 0.1,
                         child: Padding(
                           padding: const EdgeInsets.only(
                               //left: Dimens.PADDING_15,
@@ -106,7 +105,6 @@ class _StudentHomeState extends State<StudentHome> {
                               right: Dimens.PADDING_10,
                               bottom: Dimens.PADDING_10),
                           child: Container(
-                            height: mainHeight * 0.06,
                             alignment: Alignment.center,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
