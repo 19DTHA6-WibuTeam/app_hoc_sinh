@@ -20,6 +20,7 @@ class Images {
   static const String iconSetting = '$iconPath/icon_setting.svg';
   static const String iconMember = '$iconPath/icon_member.svg';
   static const String iconTime = '$iconPath/icon_time.svg';
+  static const String iconCamera = '$iconPath/Camera Icon.svg';
 
   //IMAGES
   static const String imageIntro1 = '$imagePath/image_intro_1.png';

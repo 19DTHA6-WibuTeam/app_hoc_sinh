@@ -81,3 +81,41 @@ Future<List<User>?> getTutorList(Future<String> _token) async {
     throw Exception('Failed to load subject list');
   }
 }
+
+Future<bool?> changeInfo(
+  Future<String> _userId,
+  Future<String> _token,
+  String name,
+  String address,
+  String birthday,
+  String gender,
+  String phoneNumber,
+) async {
+  String userId = await _userId;
+  String token = await _token;
+
+  var map = new Map<String, dynamic>();
+  map['HoTen'] = name;
+  map['NgaySinh'] = birthday;
+  map['GioiTinh'] = gender;
+  map['DiaChi'] = address;
+  map['SDT'] = phoneNumber;
+
+  final response = await http.patch(
+    Uri.parse('${Dimens.API_URL}NguoiDung/$userId'),
+    headers: <String, String>{
+      'Authorization': 'Bearer $token',
+    },
+    body: map,
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    return data['success'];
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    return null;
+    // throw Exception('Failed to load info');
+  }
+}

@@ -204,7 +204,7 @@ class _StudentPostState extends State<StudentPost> {
                                     showTitleActions: true,
                                     minTime: DateTime.now()
                                         .subtract(const Duration(days: 365000)),
-                                    maxTime: DateTime.now(), onConfirm: (date) {
+                                    maxTime: DateTime(3000), onConfirm: (date) {
                                   startDate.value = date;
                                 },
                                     currentTime: DateTime.now(),

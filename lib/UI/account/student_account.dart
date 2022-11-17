@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doan_chuyen_nganh/UI/account/controller/image_picker_controller.dart';
+import 'package:doan_chuyen_nganh/UI/app_switch/app_switch3.dart';
 import 'package:doan_chuyen_nganh/widget/round_avatar.dart';
 import 'package:doan_chuyen_nganh/UI/change_pass/change_pass_page.dart';
 import 'package:doan_chuyen_nganh/UI/sign_in/student_login.dart';
@@ -12,7 +15,9 @@ import 'package:doan_chuyen_nganh/widget/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class StudentAccount extends StatefulWidget {
@@ -43,12 +48,14 @@ class _StudentAccountState extends State<StudentAccount> {
     if (gender.value == 1) {
       isFeMale.value = false;
     }
-    avatar.value = user?.avatar ?? '';
+
+    controller.imageURL = user?.avatar ?? '';
     setState(() {
       isLoaded = true;
     });
   }
 
+  final ProfileController controller = ProfileController();
   RxInt gender = 0.obs;
   RxString avatar = "".obs;
   RxBool enabled = false.obs;
@@ -99,12 +106,134 @@ class _StudentAccountState extends State<StudentAccount> {
                                 color: AppColors.dark,
                               ),
                         onPressed: () {
-                          enabled.value = !enabled.value;
+                          if (enabled.value == false) {
+                            enabled.value = true;
+                          } else {
+                            _showChangeInfoDialog(context);
+                            enabled.value = false;
+                          }
                         },
                       ),
                     ],
                   ),
                 ),
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 40,
+                      ),
+                    ],
+                  ),
+                  child: SizedBox(
+                    height: maxHeight * 0.15,
+                    width: maxHeight * 0.15,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      //overflow: Overflow.visible,
+                      children: [
+                        Obx(() {
+                          if (controller.isLoading.value) {
+                            return const CircleAvatar(
+                              backgroundImage: AssetImage(Images.imageDefault),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                              )),
+                            );
+                          } else {
+                            if (controller.imageURL.length != 0) {
+                              return CachedNetworkImage(
+                                imageUrl: controller.imageURL,
+                                fit: BoxFit.cover,
+                                imageBuilder: (context, imageProvider) =>
+                                    CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: imageProvider,
+                                ),
+                                placeholder: (context, url) =>
+                                    const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage(Images.imageDefault),
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                  )),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              );
+                            } else {
+                              return const CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(Images.imageDefault),
+                              );
+                            }
+                          }
+                        }),
+                        Positioned(
+                          left: maxHeight * 0.11,
+                          bottom: 0,
+                          child: SizedBox(
+                            height: maxHeight * 0.035,
+                            width: maxHeight * 0.035,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                primary: AppColors.gray,
+                                backgroundColor: AppColors.gray,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                  side: BorderSide(color: Colors.white),
+                                ),
+                              ),
+                              onPressed: () {
+                                Get.bottomSheet(
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(16.0),
+                                          topRight: Radius.circular(16.0)),
+                                    ),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.end,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.end,
+                                      children: [
+                                        ListTile(
+                                          leading: Icon(Icons.camera),
+                                          title: Text('Camera'),
+                                          onTap: () {
+                                            Get.back();
+                                            controller.uploadImage(
+                                              ImageSource.camera,
+                                            );
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: Icon(Icons.image),
+                                          title: Text('Gallery'),
+                                          onTap: () {
+                                            Get.back();
+                                            controller.uploadImage(
+                                                ImageSource.gallery);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: SvgPicture.asset(Images.iconCamera),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: maxHeight * 0.03),
                 Padding(
                   padding: const EdgeInsets.only(
                       left: Dimens.PADDING_20,
@@ -113,33 +242,6 @@ class _StudentAccountState extends State<StudentAccount> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      avatar.value != ''
-                          ? SizedBox(
-                              height: Dimens.HEIGHT_200,
-                              width: Dimens.WIDTH_200,
-                              child: RoundAvatar(
-                                imagePath: avatar.value,
-                                leftPadding: Dimens.PADDING_20,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_20,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: true,
-                              ),
-                            )
-                          : SizedBox(
-                              height: Dimens.HEIGHT_200,
-                              width: Dimens.WIDTH_200,
-                              child: RoundAvatar(
-                                imagePath: Images.imageDefault,
-                                leftPadding: Dimens.PADDING_20,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_20,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: false,
-                              ),
-                            ),
                       Obx(
                         () => AppTextField(
                           labelText: Dimens.Phone,
@@ -344,6 +446,46 @@ class _StudentAccountState extends State<StudentAccount> {
         )),
       ),
     );
+  }
+
+  _showChangeInfoDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text('Xác nhận thay đổi thông tin'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Không'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      dismissDialog() {
+                        Get.back();
+                      }
+
+                      final birthday = pickedDate.value.toString().split(' ');
+                      String gender = "";
+                      if (dropdownValue == "Nữ") {
+                        gender = "0";
+                      } else {
+                        gender = "1";
+                      }
+                      bool? success = await changeInfo(
+                          BaseSharedPreferences.getString('MaNguoiDung'),
+                          BaseSharedPreferences.getString('token'),
+                          _fullNameController.text,
+                          _addressController.text,
+                          birthday[0],
+                          gender,
+                          _phoneNumberController.text);
+
+                      dismissDialog();
+                      Get.offAll(Tutor3());
+                    },
+                    child: const Text('Có'),
+                  ),
+                ]));
   }
 }
 
