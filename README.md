@@ -4,7 +4,7 @@ This is a small project to solve the problem of finding a tutor for students in 
 
 This is some screen of application:
 
-![image](https://user-images.githubusercontent.com/88758271/202724415-3c3329f4-8778-486a-b293-0e8cc4ace731.png) SplashScreen
+![image](https://user-images.githubusercontent.com/88758271/202724415-3c3329f4-8778-486a-b293-0e8cc4ace731.png)
 ![image](https://user-images.githubusercontent.com/88758271/202724813-5495450b-9169-47eb-8bfd-1e93676bdebf.png)
 ![image](https://user-images.githubusercontent.com/88758271/202724985-1b22695d-07d8-4306-8dc2-88fa066ffd3e.png)
 ![image](https://user-images.githubusercontent.com/88758271/202725091-bcf9fc2d-8aad-4053-9f21-332cb0da4f2e.png)
