@@ -4,7 +4,7 @@ This is a small project to solve the problem of finding a tutor for students in 
 
 This is some screen of application:
 
-![image](https://user-images.githubusercontent.com/88758271/202724415-3c3329f4-8778-486a-b293-0e8cc4ace731.png)
+![image](https://user-images.githubusercontent.com/88758271/202724415-3c3329f4-8778-486a-b293-0e8cc4ace731.png) SplashScreen
 ![image](https://user-images.githubusercontent.com/88758271/202724813-5495450b-9169-47eb-8bfd-1e93676bdebf.png)
 ![image](https://user-images.githubusercontent.com/88758271/202724985-1b22695d-07d8-4306-8dc2-88fa066ffd3e.png)
 ![image](https://user-images.githubusercontent.com/88758271/202725091-bcf9fc2d-8aad-4053-9f21-332cb0da4f2e.png)
@@ -15,4 +15,5 @@ This is some screen of application:
 ![image](https://user-images.githubusercontent.com/88758271/202725528-30020c4d-8d3d-4cb9-9bea-103261b841a9.png)
 ![image](https://user-images.githubusercontent.com/88758271/202725629-25d4b694-2c16-4481-a655-20215e89b081.png)
 ![image](https://user-images.githubusercontent.com/88758271/202725680-f4c6cebd-3ebd-480e-a18b-6235f6646628.png)
+![image](https://user-images.githubusercontent.com/88758271/202725922-54f91c9f-3018-45b0-8ad2-4cc606e45a01.png)
 
