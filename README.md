@@ -1,16 +1,8 @@
 # doan_chuyen_nganh
 
-A new Flutter project.
+This is a small project to solve the problem of finding a tutor for students in Vietnam. In this project I use getx to manage state. Student application with main functions such as posting to search for tutors, viewing the class schedule of registered courses, viewing the history of your own courses, managing courses
 
-## Getting Started
+This is some screen of application
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![image](https://user-images.githubusercontent.com/88758271/202724415-3c3329f4-8778-486a-b293-0e8cc4ace731.png)
+This is splash screen
