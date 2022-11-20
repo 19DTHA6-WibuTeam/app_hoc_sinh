@@ -151,7 +151,7 @@ class _SessionChild3State extends State<SessionChild3> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Ngày đăng ký: ",
+                                        "Ngày bắt đầu: ",
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),
                                       ),
@@ -160,7 +160,7 @@ class _SessionChild3State extends State<SessionChild3> {
                                       ),
                                       Text(
                                         DateFormat('dd/MM/yyyy').format(
-                                            sessionList[i].ngayDangKy ??
+                                            sessionList[i].ngayBatDau ??
                                                 DateTime.now()),
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),

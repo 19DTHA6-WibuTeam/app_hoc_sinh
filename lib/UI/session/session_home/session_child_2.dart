@@ -145,12 +145,33 @@ class _SessionChild2State extends State<SessionChild2> {
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.white),
                                   ),
+                                  // Row(
+                                  //   crossAxisAlignment:
+                                  //       CrossAxisAlignment.center,
+                                  //   children: [
+                                  //     Text(
+                                  //       "Ngày đăng ký: ",
+                                  //       style: AppTextStyle.chooseText.copyWith(
+                                  //           fontSize: maxWidth * 0.05),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       width: 2,
+                                  //     ),
+                                  //     Text(
+                                  //       DateFormat('dd/MM/yyyy').format(
+                                  //           sessionList[i].ngayDangKy ??
+                                  //               DateTime.now()),
+                                  //       style: AppTextStyle.chooseText.copyWith(
+                                  //           fontSize: maxWidth * 0.05),
+                                  //     )
+                                  //   ],
+                                  // ),
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Ngày đăng ký: ",
+                                        "Ngày bắt đầu: ",
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),
                                       ),
@@ -159,7 +180,7 @@ class _SessionChild2State extends State<SessionChild2> {
                                       ),
                                       Text(
                                         DateFormat('dd/MM/yyyy').format(
-                                            sessionList[i].ngayDangKy ??
+                                            sessionList[i].ngayBatDau ??
                                                 DateTime.now()),
                                         style: AppTextStyle.chooseText.copyWith(
                                             fontSize: maxWidth * 0.05),

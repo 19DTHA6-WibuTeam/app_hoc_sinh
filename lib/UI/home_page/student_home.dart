@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doan_chuyen_nganh/UI/account/controller/image_picker_controller.dart';
 import 'package:doan_chuyen_nganh/widget/round_avatar.dart';
 import 'package:doan_chuyen_nganh/UI/student_post/student_post.dart';
 import 'package:doan_chuyen_nganh/UI/tutor_detail/tutor_detail.dart';
@@ -31,6 +33,7 @@ class _StudentHomeState extends State<StudentHome> {
 
   String name = '';
   String avatar = '';
+  final ProfileController controller = ProfileController();
   var isLoaded = false;
   List<User> tutorList = [];
   Future<void> _getData() async {
@@ -38,7 +41,7 @@ class _StudentHomeState extends State<StudentHome> {
     var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token'));
     name = user!.user_fullname ?? Dimens.student;
-    avatar = user.avatar ?? '';
+    controller.imageURL = user.avatar ?? '';
     setState(() {
       isLoaded = true;
     });
@@ -70,33 +73,57 @@ class _StudentHomeState extends State<StudentHome> {
                 children: [
                   Row(
                     children: [
-                      avatar != ''
-                          ? SizedBox(
-                              height: mainWidth * 0.24,
-                              width: mainWidth * 0.24,
-                              child: RoundAvatar(
-                                imagePath: avatar,
-                                leftPadding: Dimens.PADDING_10,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_10,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: true,
-                              ),
-                            )
-                          : SizedBox(
-                              height: mainWidth * 0.24,
-                              width: mainWidth * 0.24,
-                              child: RoundAvatar(
-                                imagePath: Images.imageDefault,
-                                leftPadding: Dimens.PADDING_10,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_10,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: false,
-                              ),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: Dimens.PADDING_10,
+                            top: Dimens.PADDING_20,
+                            right: Dimens.PADDING_10,
+                            bottom: Dimens.PADDING_20),
+                        child: SizedBox(
+                          height: mainWidth * 0.17,
+                          width: mainWidth * 0.17,
+                          child: Obx(() {
+                            if (controller.isLoading.value) {
+                              return const CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(Images.imageDefault),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                )),
+                              );
+                            } else {
+                              if (controller.imageURL.length != 0) {
+                                return CachedNetworkImage(
+                                  imageUrl: controller.imageURL,
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: imageProvider,
+                                  ),
+                                  placeholder: (context, url) =>
+                                      const CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage(Images.imageDefault),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    )),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                );
+                              } else {
+                                return const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage(Images.imageDefault),
+                                );
+                              }
+                            }
+                          }),
+                        ),
+                      ),
                       SizedBox(
                         child: Padding(
                           padding: const EdgeInsets.only(
