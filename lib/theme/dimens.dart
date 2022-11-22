@@ -130,6 +130,7 @@ class Dimens {
   static const sessionDetail = "Chi tiết khóa học";
   static const continueLearn = "Học, Học nữa, Học mãi!";
   static const week = "Số tuần học ";
+  static const week1 = "Số tuần học: ";
   static const deleteSession = "Hủy đăng ký";
   static const postDone = "Đăng bài thành công!";
   static const postWrong = "Trùng lịch học rồi!";

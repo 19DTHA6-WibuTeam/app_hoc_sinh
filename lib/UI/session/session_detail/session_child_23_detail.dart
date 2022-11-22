@@ -226,6 +226,22 @@ class _SessionChild23DetailState extends State<SessionChild23Detail> {
                           ),
                           Row(
                             children: [
+                              const Text(Dimens.week1,
+                                  style: AppTextStyle.calenderDetailBoldText),
+                              const SizedBox(
+                                width: Dimens.WIDTH_5,
+                              ),
+                              Text(
+                                sessionList[index].soTuan.toString(),
+                                style: AppTextStyle.calenderDetailDarkText,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: maxHeight * 0.01,
+                          ),
+                          Row(
+                            children: [
                               const Text(Dimens.learningTime,
                                   style: AppTextStyle.calenderDetailBoldText),
                               const SizedBox(

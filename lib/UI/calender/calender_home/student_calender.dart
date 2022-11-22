@@ -91,6 +91,7 @@ class _StudentCalenderState extends State<StudentCalender> {
                 _selectedDay.value = selectedDay;
                 chooseDay.value =
                     DateFormat.yMMMMd().format(selectedDay).toString();
+
                 for (int i = 0; i < calenderList.length; i++) {
                   if (_selectedDay.value.weekday == calenderList[i].maThu) {
                     isInit.value = false;
@@ -136,123 +137,141 @@ class _StudentCalenderState extends State<StudentCalender> {
                     itemBuilder: (_, index) {
                       return calenderList[index].maThu ==
                               _selectedDay.value.weekday
-                          ? GestureDetector(
-                              onTap: () {
-                                Get.to(CalenderDetail(
-                                  sessionId: calenderList[index].maKhoaHoc!,
-                                  learningDay: DateFormat('dd/MM/yyyy')
-                                      .format(_selectedDay.value)
-                                      .toString(),
-                                  dayId: calenderList[index].maThu!,
-                                ));
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: maxWidth * 0.05),
-                                margin: EdgeInsets.only(
-                                    bottom: maxHeight * 0.01,
-                                    right: maxWidth * 0.02,
-                                    left: maxWidth * 0.02),
-                                width: maxWidth,
-                                height: maxHeight * 0.2,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(Dimens.RADIUS_15),
-                                    color: AppColors.primary),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                          ? (DateTime.parse(calenderList[index].ngayBatDau)
+                                          .compareTo(_selectedDay.value) <=
+                                      0 &&
+                                  DateTime.parse(calenderList[index].ngayBatDau)
+                                          .add(Duration(
+                                              days: (7 *
+                                                      calenderList[index]
+                                                          .soTuan!)
+                                                  .toInt()))
+                                          .compareTo(_selectedDay.value) >=
+                                      0)
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Get.to(CalenderDetail(
+                                      sessionId: calenderList[index].maKhoaHoc!,
+                                      learningDay: DateFormat('dd/MM/yyyy')
+                                          .format(_selectedDay.value)
+                                          .toString(),
+                                      dayId: calenderList[index].maThu!,
+                                    ));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: maxWidth * 0.05),
+                                    margin: EdgeInsets.only(
+                                        bottom: maxHeight * 0.01,
+                                        right: maxWidth * 0.02,
+                                        left: maxWidth * 0.02),
+                                    width: maxWidth,
+                                    height: maxHeight * 0.2,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.RADIUS_15),
+                                        color: AppColors.primary),
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          calenderList[index].tenMonHoc!,
-                                          style: AppTextStyle.chooseText
-                                              .copyWith(
-                                                  fontSize: maxWidth * 0.07,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.white),
-                                        ),
-                                        Row(
+                                        Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Icon(
-                                              Icons.access_time_rounded,
-                                              color: AppColors.white,
-                                              size: maxWidth * 0.05,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
                                             Text(
-                                              subTimeCodeToString[index],
+                                              calenderList[index].tenMonHoc!,
                                               style: AppTextStyle.chooseText
                                                   .copyWith(
-                                                      fontSize:
-                                                          maxWidth * 0.05),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.location_on,
-                                              color: AppColors.white,
-                                              size: maxWidth * 0.05,
+                                                      fontSize: maxWidth * 0.07,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: AppColors.white),
                                             ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            SizedBox(
-                                              width: maxWidth * 0.695,
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  calenderList[index].diaChi!,
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.access_time_rounded,
+                                                  color: AppColors.white,
+                                                  size: maxWidth * 0.05,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  subTimeCodeToString[index],
                                                   style: AppTextStyle.chooseText
                                                       .copyWith(
                                                           fontSize:
-                                                              maxWidth * 0.04),
-                                                  overflow:
-                                                      TextOverflow.visible,
+                                                              maxWidth * 0.05),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on,
+                                                  color: AppColors.white,
+                                                  size: maxWidth * 0.05,
                                                 ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                SizedBox(
+                                                  width: maxWidth * 0.695,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      calenderList[index]
+                                                          .diaChi!,
+                                                      style: AppTextStyle
+                                                          .chooseText
+                                                          .copyWith(
+                                                              fontSize:
+                                                                  maxWidth *
+                                                                      0.04),
+                                                      overflow:
+                                                          TextOverflow.visible,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: maxWidth * 0.02),
+                                              height: maxHeight * 0.15,
+                                              width: 1,
+                                              color: AppColors.white,
+                                            ),
+                                            RotatedBox(
+                                              quarterTurns: 3,
+                                              child: Text(
+                                                "Chi tiết",
+                                                style: AppTextStyle.chooseText
+                                                    .copyWith(
+                                                        fontSize:
+                                                            maxWidth * 0.05),
                                               ),
                                             )
                                           ],
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: maxWidth * 0.02),
-                                          height: maxHeight * 0.15,
-                                          width: 1,
-                                          color: AppColors.white,
-                                        ),
-                                        RotatedBox(
-                                          quarterTurns: 3,
-                                          child: Text(
-                                            "Chi tiết",
-                                            style: AppTextStyle.chooseText
-                                                .copyWith(
-                                                    fontSize: maxWidth * 0.05),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
+                                  ),
+                                )
+                              : SizedBox()
                           : SizedBox();
                     },
                     itemCount: calenderList.length,
