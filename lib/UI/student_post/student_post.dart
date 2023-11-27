@@ -55,6 +55,34 @@ class _StudentPostState extends State<StudentPost> {
     _addressController.text = user?.user_address ?? '';
     _noteController.text = "";
 
+
+  Future<void> _getData() async {
+    var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
+        BaseSharedPreferences.getString('token'));
+    _nameController.text = user?.user_fullname ?? '';
+    _phoneController.text = user?.user_phone_number ?? '';
+    _addressController.text = user?.user_address ?? '';
+    _noteController.text = "";
+cv
+
+  Future<void> _getData() async {
+    var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
+        BaseSharedPreferences.getString('token'));
+    _nameController.text = user?.user_fullname ?? '';
+    _phoneController.text = user?.user_phone_number ?? '';
+    _addressController.text = user?.user_address ?? '';
+    _noteController.text = "";
+
+
+
+  Future<void> _getData() async {
+    var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
+        BaseSharedPreferences.getString('token'));
+    _nameController.text = user?.user_fullname ?? '';
+    _phoneController.text = user?.user_phone_number ?? '';
+    _addressController.text = user?.user_address ?? '';
+    _noteController.text = "";
+
     List<MonHoc>? subjectListAPI = await getSubjectList();
     subjectList = [Dimens.chooseSubject].obs;
     for (int i = 0; i < subjectListAPI!.length; i++) {
