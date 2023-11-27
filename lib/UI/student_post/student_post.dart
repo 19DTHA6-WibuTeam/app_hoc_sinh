@@ -37,7 +37,11 @@ class _StudentPostState extends State<StudentPost> {
   RxString feeValue = "".obs;
 
 
-    oiqweqoicljbavidoivjkmnaq úi
+
+    oiqweqoicljbavidoivjkmnaq 
+
+abc
+
 
 
   nvwue9oupjflvnbevy9p90ipkjbehu v4 
