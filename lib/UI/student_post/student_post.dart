@@ -36,6 +36,18 @@ class _StudentPostState extends State<StudentPost> {
   RxList<String> feeList = [Dimens.chooseFee].obs;
   RxString feeValue = "".obs;
 
+
+
+  nvwue9oupjflvnbevy9p90ipkjbehu v4 
+  2e.
+    1c324c1\
+     
+     13v
+     g  ư4rv
+      a4/y
+      
+
+
   @override
   void initState() {
     super.initState();
